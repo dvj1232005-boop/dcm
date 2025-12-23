@@ -93,8 +93,6 @@ button{
   font-size:13px;
   opacity:.7;
 }
-
-/* BẢN QUYỀN */
 .copyright{
   margin-top:16px;
   text-align:center;
@@ -121,7 +119,6 @@ button{
     <div class="note">Ngày không làm có thể để trống.</div>
   </div>
 
-  <!-- BẢN QUYỀN -->
   <div class="copyright">
     © 2025 An Quy Chế • Developed by Đào Đăng Tùng
   </div>
@@ -145,47 +142,56 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const days=["T2","T3","T4","T5","T6","T7","CN"];
-const table=document.getElementById("schedule");
+const days = ["T2","T3","T4","T5","T6","T7","CN"];
+const table = document.getElementById("schedule");
+
+/* ===== DANH SÁCH CA (ĐÚNG YÊU CẦU CỦA BẠN) ===== */
+const shifts = [
+  { value:"C1", label:"C1" },
+  { value:"C2", label:"C2" },
+  { value:"C3", label:"C3" },
+  { value:"2C_C1_C2", label:"2C (C1 + C2)" },
+  { value:"2C_C2_C3", label:"2C (C2 + C3)" },
+  { value:"F1", label:"F1" },
+  { value:"F2", label:"F2" }
+];
 
 days.forEach(d=>{
-  table.innerHTML+=`
+  table.innerHTML += `
     <tr>
       <td class="day">${d}</td>
       <td>
         <select id="${d}">
           <option value="">— Không làm —</option>
-          <option value="C1">C1</option>
-          <option value="C2">C2</option>
-          <option value="C3">C3</option>
-          <option value="2C_C1_C2">2C (C1 + C2)</option>
-          <option value="2C_C2_C3">2C (C2 + C3)</option>
+          ${shifts.map(s=>`
+            <option value="${s.value}">${s.label}</option>
+          `).join("")}
         </select>
       </td>
     </tr>
   `;
 });
 
-window.submitSchedule=async()=>{
-  const name=document.getElementById("name").value.trim();
+window.submitSchedule = async () => {
+  const name = document.getElementById("name").value.trim();
   if(!name) return alert("Chưa nhập tên");
 
   /* QUẢN LÝ */
-  if(name==="QuanLy"){
-    const snap=await get(ref(db,"dangKy"));
+  if(name === "QuanLy"){
+    const snap = await get(ref(db,"dangKy"));
     if(!snap.exists()) return alert("Chưa có dữ liệu");
     let text="";
     snap.forEach(n=>{
       const lich=n.val().lich||{};
       Object.keys(lich).forEach(d=>{
-        text+=`${n.key}: ${d} - ${lich[d]}\n`;
+        text += `${n.key}: ${d} - ${lich[d]}\n`;
       });
     });
     alert(text);
     return;
   }
 
-  const lich={};
+  const lich = {};
   days.forEach(d=>{
     const v=document.getElementById(d).value;
     if(v) lich[d]=v;
@@ -200,7 +206,7 @@ window.submitSchedule=async()=>{
   alert("🎉 Gửi lịch thành công");
 };
 
-window.toggleTheme=()=>{
+window.toggleTheme = ()=>{
   document.body.classList.toggle("dark");
 };
 
