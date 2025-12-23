@@ -1,93 +1,173 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đăng ký ca làm</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng ký ca làm</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #eafafa;
-      padding: 20px;
-    }
-    h2 {
-      text-align: center;
-    }
-    table {
-      width: 100%;
-      background: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-      text-align: center;
-    }
-    select, input {
-      padding: 6px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      width: 90%;
-    }
-    button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 12px;
-      background: #0aa;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+<style>
+:root {
+  --bg: linear-gradient(135deg, #dff6f3, #f7fbff);
+  --card: #ffffff;
+  --text: #222;
+  --accent: #00a8a8;
+}
+
+body.dark {
+  --bg: linear-gradient(135deg, #0f2027, #203a43);
+  --card: #1f2933;
+  --text: #f1f5f9;
+  --accent: #38f2e0;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.1);
+  padding: 20px;
+  animation: fadeIn .6s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform:none;}
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.toggle {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px 0;
+}
+
+.day {
+  font-weight: 600;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  transition: .2s;
+}
+
+select:not([value=""]) {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0,168,168,.15);
+}
+
+button {
+  margin-top: 18px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  background: linear-gradient(135deg, var(--accent), #00d4c4);
+  color: white;
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.15);
+}
+
+.note {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: .7;
+}
+</style>
 </head>
 
 <body>
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <h2>📅 Đăng ký ca làm</h2>
+      <div class="toggle" onclick="toggleTheme()">🌙</div>
+    </div>
 
-<h2>📅 Đăng ký ca làm trong tuần</h2>
+    <input id="name" placeholder="👤 Nhập tên của bạn">
 
-<input id="name" placeholder="Tên nhân viên" />
+    <table id="schedule"></table>
 
-<table>
-  <tr>
-    <th>Thứ</th>
-    <th>Ca</th>
-  </tr>
+    <button onclick="submitSchedule()">✅ Xác nhận đăng ký</button>
+    <div class="note">Ngày không làm có thể để trống.</div>
+  </div>
+</div>
 
-  <tbody id="schedule"></tbody>
-</table>
-
-<button onclick="submitSchedule()">Xác nhận đăng ký</button>
-
-<!-- FIREBASE -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCK6yfVr9VBMGwhbvYMXkJqMoRjo4Om2LM",
-    authDomain: "an-quy.firebaseapp.com",
-    databaseURL: "https://an-quy-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "an-quy",
-    storageBucket: "an-quy.firebasestorage.app",
-    messagingSenderId: "672469940026",
-    appId: "1:672469940026:web:a38e5b15bbeb2361b84203"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCK6yfVr9VBMGwhbvYMXkJqMoRjo4Om2LM",
+  authDomain: "an-quy.firebaseapp.com",
+  databaseURL: "https://an-quy-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "an-quy",
+  storageBucket: "an-quy.firebasestorage.app",
+  messagingSenderId: "672469940026",
+  appId: "1:672469940026:web:a38e5b15bbeb2361b84203"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-  const days = ["T2","T3","T4","T5","T6","T7","CN"];
-  const tbody = document.getElementById("schedule");
+const days = ["T2","T3","T4","T5","T6","T7","CN"];
+const table = document.getElementById("schedule");
 
-  days.forEach(d => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${d}</td>
+days.forEach(d => {
+  table.innerHTML += `
+    <tr>
+      <td class="day">${d}</td>
       <td>
         <select id="${d}">
           <option value="">— Không làm —</option>
@@ -98,32 +178,31 @@
           <option value="2C_C2_C3">2C (C2 + C3)</option>
         </select>
       </td>
-    `;
-    tbody.appendChild(tr);
+    </tr>
+  `;
+});
+
+window.submitSchedule = () => {
+  const name = document.getElementById("name").value.trim();
+  if (!name) return alert("Chưa nhập tên");
+
+  const lich = {};
+  days.forEach(d => {
+    const v = document.getElementById(d).value;
+    if (v) lich[d] = v;
   });
 
-  window.submitSchedule = function () {
-    const name = document.getElementById("name").value.trim();
-    if (!name) {
-      alert("Vui lòng nhập tên");
-      return;
-    }
+  set(ref(db, "dangKy/" + name), {
+    ten: name,
+    lich,
+    time: Date.now()
+  }).then(() => alert("🎉 Gửi lịch thành công"));
+};
 
-    const data = {};
-    days.forEach(d => {
-      const val = document.getElementById(d).value;
-      if (val) data[d] = val;
-    });
-
-    set(ref(db, "dangKy/" + name), {
-      ten: name,
-      lich: data,
-      time: Date.now()
-    })
-    .then(() => alert("✅ Đã gửi lịch đăng ký"))
-    .catch(err => alert("❌ Lỗi: " + err.message));
-  };
+window.toggleTheme = () => {
+  document.body.classList.toggle("dark");
+};
 </script>
-
 </body>
 </html>
+
