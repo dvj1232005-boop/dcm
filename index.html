@@ -71,6 +71,7 @@ select{
   padding:10px;
   border-radius:12px;
   border:1px solid #ccc;
+  transition:.2s;
 }
 select:not([value=""]){
   border-color:var(--accent);
@@ -92,6 +93,15 @@ button{
   font-size:13px;
   opacity:.7;
 }
+
+/* BẢN QUYỀN */
+.copyright{
+  margin-top:16px;
+  text-align:center;
+  font-size:12px;
+  opacity:.6;
+  user-select:none;
+}
 </style>
 </head>
 
@@ -109,6 +119,11 @@ button{
 
     <button onclick="submitSchedule()">✅ Xác nhận đăng ký</button>
     <div class="note">Ngày không làm có thể để trống.</div>
+  </div>
+
+  <!-- BẢN QUYỀN -->
+  <div class="copyright">
+    © 2025 An Quy Chế • Developed by Đào Đăng Tùng
   </div>
 </div>
 
@@ -155,9 +170,9 @@ window.submitSchedule=async()=>{
   const name=document.getElementById("name").value.trim();
   if(!name) return alert("Chưa nhập tên");
 
-  // QUẢN LÝ
+  /* QUẢN LÝ */
   if(name==="QuanLy"){
-    let snap=await get(ref(db,"dangKy"));
+    const snap=await get(ref(db,"dangKy"));
     if(!snap.exists()) return alert("Chưa có dữ liệu");
     let text="";
     snap.forEach(n=>{
@@ -189,12 +204,13 @@ window.toggleTheme=()=>{
   document.body.classList.toggle("dark");
 };
 
-// SW
+/* SERVICE WORKER */
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("sw.js");
 }
 </script>
 </body>
 </html>
+
 
 
