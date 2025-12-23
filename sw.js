@@ -1,6 +1,6 @@
-const CACHE_NAME = "an-quy-che-v6";
+const CACHE_NAME = "an-quy-che-v8";
 
-const FILES_TO_CACHE = [
+const FILES = [
   "./",
   "./index.html",
   "./manifest.json",
@@ -8,15 +8,15 @@ const FILES_TO_CACHE = [
   "./icon-512.png"
 ];
 
-self.addEventListener("install", event => {
+self.addEventListener("install", e => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(c => c.addAll(FILES))
   );
 });
 
-self.addEventListener("activate", event => {
-  event.waitUntil(
+self.addEventListener("activate", e => {
+  e.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
         keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
@@ -25,8 +25,9 @@ self.addEventListener("activate", event => {
   );
 });
 
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(res => res || fetch(event.request))
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    caches.match(e.request).then(r => r || fetch(e.request))
   );
 });
+
