@@ -1,168 +1,128 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>An Quy Chế – Đăng ký ca</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng ký ca làm</title>
 
-<link rel="manifest" href="manifest.json">
-
-<style>
-  body{
-    margin:0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont;
-    background:#020617;
-    color:#e5e7eb;
-  }
-  header{
-    background:#0ea5a4;
-    padding:16px;
-    text-align:center;
-    font-weight:700;
-    font-size:20px;
-  }
-  .container{
-    padding:16px;
-    max-width:520px;
-    margin:auto;
-  }
-  .card{
-    background:#020617;
-    border:1px solid #0ea5a4;
-    border-radius:12px;
-    padding:14px;
-    margin-bottom:14px;
-  }
-  table{
-    width:100%;
-    border-collapse:collapse;
-  }
-  td{
-    padding:8px;
-  }
-  select,input,button{
-    width:100%;
-    padding:10px;
-    border-radius:10px;
-    border:none;
-    font-size:16px;
-  }
-  select,input{
-    background:#0f172a;
-    color:white;
-  }
-  button{
-    background:#0ea5a4;
-    color:#020617;
-    font-weight:700;
-    margin-top:12px;
-  }
-  .ok{color:#22c55e}
-</style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eafafa;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+    }
+    select, input {
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 90%;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background: #0aa;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
-<header>AN QUY CHẾ – HỆ THỐNG ĐĂNG KÝ CA</header>
 
-<div class="container">
+<h2>📅 Đăng ký ca làm trong tuần</h2>
 
-<div class="card">
-  <h3>📅 Đăng ký ca trong tuần</h3>
-  <table>
-    <tbody id="schedule"></tbody>
-  </table>
+<input id="name" placeholder="Tên nhân viên" />
 
-  <input id="nameInput" placeholder="Nhập tên (hoặc QuanLy)" />
-  <button onclick="submitSchedule()">Xác nhận đăng ký</button>
-  <div id="status"></div>
-</div>
+<table>
+  <tr>
+    <th>Thứ</th>
+    <th>Ca</th>
+  </tr>
 
-<div id="managerBox" class="card" style="display:none">
-  <h3>📊 Tổng hợp cho quản lý</h3>
-  <div id="managerData">⏳ Đang tải dữ liệu...</div>
-</div>
+  <tbody id="schedule"></tbody>
+</table>
 
-</div>
+<button onclick="submitSchedule()">Xác nhận đăng ký</button>
 
-<!-- FIREBASE (COMPAT – ỔN ĐỊNH NHẤT) -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
-<script>
-/* ===== FIREBASE CONFIG (ĐÃ SỬA CHUẨN) ===== */
-const firebaseConfig = {
-  apiKey: "AIzaSyCK6yfVr9VBMGwhbvYMXkJqMoRjo4Om2LM",
-  authDomain: "an-quy.firebaseapp.com",
-  databaseURL: "https://an-quy-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "an-quy",
-  storageBucket: "an-quy.appspot.com",
-  messagingSenderId: "672469940026",
-  appId: "1:672469940026:web:a38e5b15bbeb2361b84203"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyCK6yfVr9VBMGwhbvYMXkJqMoRjo4Om2LM",
+    authDomain: "an-quy.firebaseapp.com",
+    databaseURL: "https://an-quy-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "an-quy",
+    storageBucket: "an-quy.firebasestorage.app",
+    messagingSenderId: "672469940026",
+    appId: "1:672469940026:web:a38e5b15bbeb2361b84203"
+  };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-/* ===== LOGIC APP ===== */
-const days=["T2","T3","T4","T5","T6","T7","CN"];
-const shifts=["","C1","F1","C2","F2","C3"];
-const week=new Date().getFullYear()+"-W"+Math.ceil((((new Date()-new Date(new Date().getFullYear(),0,1))/86400000)+new Date(new Date().getFullYear(),0,1).getDay()+1)/7);
+  const days = ["T2","T3","T4","T5","T6","T7","CN"];
+  const tbody = document.getElementById("schedule");
 
-const tbody=document.getElementById("schedule");
-days.forEach(d=>{
-  const tr=document.createElement("tr");
-  tr.innerHTML=`
-    <td>${d}</td>
-    <td>
-      <select data-day="${d}">
-        <option value="">— Không làm —</option>
-        ${shifts.filter(s=>s).map(s=>`<option>${s}</option>`).join("")}
-      </select>
-    </td>`;
-  tbody.appendChild(tr);
-});
+  days.forEach(d => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${d}</td>
+      <td>
+        <select id="${d}">
+          <option value="">— Không làm —</option>
+          <option value="C1">C1</option>
+          <option value="C2">C2</option>
+          <option value="C3">C3</option>
+          <option value="2C_C1_C2">2C (C1 + C2)</option>
+          <option value="2C_C2_C3">2C (C2 + C3)</option>
+        </select>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
 
-function submitSchedule(){
-  const name=nameInput.value.trim();
-  if(!name){ alert("Nhập tên"); return; }
-
-  if(name.toLowerCase()==="quanly"){
-    showManager();
-    return;
-  }
-
-  const updates={};
-  document.querySelectorAll("select").forEach(s=>{
-    if(s.value){
-      updates[`registrations/${week}/${s.dataset.day}/${s.value}/${name}`]=true;
+  window.submitSchedule = function () {
+    const name = document.getElementById("name").value.trim();
+    if (!name) {
+      alert("Vui lòng nhập tên");
+      return;
     }
-  });
 
-  firebase.database().ref().update(updates).then(()=>{
-    status.innerHTML="<p class='ok'>✅ Đã ghi nhận</p>";
-  });
-}
-
-function showManager(){
-  managerBox.style.display="block";
-  db.ref("registrations/"+week).get().then(snap=>{
-    if(!snap.exists()){ managerData.innerHTML="Chưa có dữ liệu"; return; }
-    let html="";
-    snap.forEach(day=>{
-      day.forEach(shift=>{
-        shift.forEach(name=>{
-          html+=`<div>👤 ${name.key}: ${day.key} - ${shift.key}</div>`;
-        });
-      });
+    const data = {};
+    days.forEach(d => {
+      const val = document.getElementById(d).value;
+      if (val) data[d] = val;
     });
-    managerData.innerHTML=html;
-  });
-}
 
-/* SERVICE WORKER */
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js");
-}
+    set(ref(db, "dangKy/" + name), {
+      ten: name,
+      lich: data,
+      time: Date.now()
+    })
+    .then(() => alert("✅ Đã gửi lịch đăng ký"))
+    .catch(err => alert("❌ Lỗi: " + err.message));
+  };
 </script>
 
 </body>
