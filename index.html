@@ -3,126 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Đăng ký ca làm</title>
+<title>An Quy Chế – Đăng ký ca</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00a8a8">
 
 <style>
-:root {
-  --bg: linear-gradient(135deg, #dff6f3, #f7fbff);
-  --card: #ffffff;
-  --text: #222;
-  --accent: #00a8a8;
+:root{
+  --bg:linear-gradient(135deg,#e0f7fa,#f8fbff);
+  --card:#ffffff;
+  --text:#0f172a;
+  --accent:#00a8a8;
 }
-
-body.dark {
-  --bg: linear-gradient(135deg, #0f2027, #203a43);
-  --card: #1f2933;
-  --text: #f1f5f9;
-  --accent: #38f2e0;
+body.dark{
+  --bg:linear-gradient(135deg,#0f2027,#203a43);
+  --card:#1f2933;
+  --text:#f1f5f9;
+  --accent:#38f2e0;
 }
-
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
 }
-
-.container {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
+.container{
+  width:100%;
+  max-width:420px;
+  padding:20px;
 }
-
-.card {
-  background: var(--card);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.1);
-  padding: 20px;
-  animation: fadeIn .6s ease;
+.card{
+  background:var(--card);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  animation:fade .5s ease;
 }
-
-@keyframes fadeIn {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform:none;}
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
 }
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-
-h2 {
-  margin: 0;
-  font-size: 20px;
+.toggle{
+  cursor:pointer;
+  font-size:20px;
 }
-
-.toggle {
-  cursor: pointer;
-  font-size: 20px;
+input{
+  width:100%;
+  padding:12px;
+  margin:14px 0;
+  border-radius:14px;
+  border:1px solid #ccc;
+  font-size:15px;
 }
-
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  font-size: 15px;
+table{width:100%;}
+td{padding:8px 0;}
+.day{font-weight:600;}
+select{
+  width:100%;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid #ccc;
 }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
+select:not([value=""]){
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(0,168,168,.2);
 }
-
-td {
-  padding: 10px 0;
+button{
+  margin-top:16px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:600;
+  background:linear-gradient(135deg,var(--accent),#00d4c4);
+  color:white;
 }
-
-.day {
-  font-weight: 600;
-}
-
-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  transition: .2s;
-}
-
-select:not([value=""]) {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(0,168,168,.15);
-}
-
-button {
-  margin-top: 18px;
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  font-size: 16px;
-  background: linear-gradient(135deg, var(--accent), #00d4c4);
-  color: white;
-  cursor: pointer;
-  transition: .2s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,.15);
-}
-
-.note {
-  margin-top: 10px;
-  font-size: 13px;
-  opacity: .7;
+.note{
+  margin-top:10px;
+  font-size:13px;
+  opacity:.7;
 }
 </style>
 </head>
@@ -135,7 +103,7 @@ button:hover {
       <div class="toggle" onclick="toggleTheme()">🌙</div>
     </div>
 
-    <input id="name" placeholder="👤 Nhập tên của bạn">
+    <input id="name" placeholder="👤 Nhập tên (Quản lý nhập QuanLy)">
 
     <table id="schedule"></table>
 
@@ -144,9 +112,10 @@ button:hover {
   </div>
 </div>
 
+<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCK6yfVr9VBMGwhbvYMXkJqMoRjo4Om2LM",
@@ -161,11 +130,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const days = ["T2","T3","T4","T5","T6","T7","CN"];
-const table = document.getElementById("schedule");
+const days=["T2","T3","T4","T5","T6","T7","CN"];
+const table=document.getElementById("schedule");
 
-days.forEach(d => {
-  table.innerHTML += `
+days.forEach(d=>{
+  table.innerHTML+=`
     <tr>
       <td class="day">${d}</td>
       <td>
@@ -182,27 +151,50 @@ days.forEach(d => {
   `;
 });
 
-window.submitSchedule = () => {
-  const name = document.getElementById("name").value.trim();
-  if (!name) return alert("Chưa nhập tên");
+window.submitSchedule=async()=>{
+  const name=document.getElementById("name").value.trim();
+  if(!name) return alert("Chưa nhập tên");
 
-  const lich = {};
-  days.forEach(d => {
-    const v = document.getElementById(d).value;
-    if (v) lich[d] = v;
+  // QUẢN LÝ
+  if(name==="QuanLy"){
+    let snap=await get(ref(db,"dangKy"));
+    if(!snap.exists()) return alert("Chưa có dữ liệu");
+    let text="";
+    snap.forEach(n=>{
+      const lich=n.val().lich||{};
+      Object.keys(lich).forEach(d=>{
+        text+=`${n.key}: ${d} - ${lich[d]}\n`;
+      });
+    });
+    alert(text);
+    return;
+  }
+
+  const lich={};
+  days.forEach(d=>{
+    const v=document.getElementById(d).value;
+    if(v) lich[d]=v;
   });
 
-  set(ref(db, "dangKy/" + name), {
-    ten: name,
+  await set(ref(db,"dangKy/"+name),{
+    ten:name,
     lich,
-    time: Date.now()
-  }).then(() => alert("🎉 Gửi lịch thành công"));
+    time:Date.now()
+  });
+
+  alert("🎉 Gửi lịch thành công");
 };
 
-window.toggleTheme = () => {
+window.toggleTheme=()=>{
   document.body.classList.toggle("dark");
 };
+
+// SW
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js");
+}
 </script>
 </body>
 </html>
+
 
