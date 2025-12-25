@@ -1,33 +1,11 @@
-const CACHE_NAME = "an-quy-che-v8";
-
-const FILES = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png"
-];
-
-self.addEventListener("install", e => {
+self.addEventListener("install", event => {
   self.skipWaiting();
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(c => c.addAll(FILES))
-  );
 });
 
-self.addEventListener("activate", e => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-      )
-    )
-  );
+self.addEventListener("activate", event => {
+  event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
-  );
+self.addEventListener("fetch", event => {
+  // Không cache cứng để tránh lỗi Firebase & Safari
 });
-
