@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>An Quy Chế – Đăng ký ca làm</title>
+
 <meta name="theme-color" content="#0b3d2e">
 
-<!-- ===== iOS PWA FIX (BẮT BUỘC) ===== -->
+<!-- iOS PWA -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AnQuyChe">
@@ -147,16 +147,13 @@ const app = initializeApp({
 const db = getDatabase(app);
 
 /* DATA */
-const DAYS=["T2","T3","T4","T5","T6","T7","CN"];
-const SHIFTS=["C1","C2","C3","2C(C1+C2)","2C(C2+C3)","F1","F2"];
+const DAYS = ["T2","T3","T4","T5","T6","T7","CN"];
+const SHIFTS = ["C1","C2","C3","F1","F2","2C(C1+C2)","2C(C2+C3)"];
 
 /* ===== TIME LOCK ===== */
 function isRegistrationLocked(){
-  const now=new Date();
-  const d=now.getDay();
-  const h=now.getHours();
-  const m=now.getMinutes();
-
+  const n=new Date();
+  const d=n.getDay(), h=n.getHours(), m=n.getMinutes();
   if(d===5 && (h>20 || (h===20 && m>=0))) return true;
   if(d===6 || d===0) return true;
   return false;
@@ -164,17 +161,14 @@ function isRegistrationLocked(){
 
 function updateLockStatus(){
   const el=document.getElementById("lockStatus");
-  if(!el) return;
-
   if(isRegistrationLocked()){
     el.textContent="⛔ Đang khóa đăng ký • Mở lại lúc 00:00 Thứ 2";
     el.style.color="#b91c1c";
-    el.style.fontWeight="600";
   }else{
     el.textContent="✅ Đang mở đăng ký • Khóa lúc 20:00 Thứ 6";
     el.style.color="#14532d";
-    el.style.fontWeight="600";
   }
+  el.style.fontWeight="600";
 }
 
 /* INTRO END */
@@ -211,12 +205,10 @@ DAYS.forEach(d=>{
 document.getElementById("submitBtn").onclick=async()=>{
   const ten=document.getElementById("name").value.trim();
   const pin=document.getElementById("pin");
-
   if(!ten) return alert("Vui lòng nhập tên");
 
-  if(ten.toLowerCase()!=="quanly" && isRegistrationLocked()){
-    return alert("⛔ Đã khóa đăng ký ca làm.\nMở lại lúc 00:00 Thứ 2.");
-  }
+  if(ten.toLowerCase()!=="quanly" && isRegistrationLocked())
+    return alert("⛔ Đã khóa đăng ký. Mở lại 00:00 Thứ 2.");
 
   if(ten.toLowerCase()==="quanly"){
     pin.classList.remove("hidden");
@@ -230,22 +222,21 @@ document.getElementById("submitBtn").onclick=async()=>{
     const v=document.getElementById(d).value;
     if(v) lich[d]=v;
   });
-
   if(!Object.keys(lich).length) return alert("Bạn chưa đăng ký ca nào");
 
   await set(ref(db,"dangKy/"+ten),{lich});
   alert("Đã gửi đăng ký ca làm");
 };
 
-/* MANAGER */
+/* ===== MANAGER (FIX SẮP XẾP) ===== */
 async function showManager(){
   document.getElementById("managerBox").classList.remove("hidden");
-  const s=document.getElementById("summary");
-  s.innerHTML="";
+  const summary=document.getElementById("summary");
+  summary.innerHTML="";
 
   const snap=await get(ref(db,"dangKy"));
   if(!snap.exists()){
-    s.innerHTML="<p>Chưa có dữ liệu</p>";
+    summary.innerHTML="<p>Chưa có dữ liệu đăng ký</p>";
     return;
   }
 
@@ -260,14 +251,17 @@ async function showManager(){
     });
   });
 
-  Object.entries(sum).forEach(([d,sh])=>{
-    s.innerHTML+=`<div class="day">${d}</div>`;
-    Object.entries(sh).forEach(([c,arr])=>{
-      s.innerHTML+=`
+  DAYS.forEach(day=>{
+    if(!sum[day]) return;
+    summary.innerHTML+=`<div class="day">${day}</div>`;
+    SHIFTS.forEach(shift=>{
+      if(!sum[day][shift]) return;
+      summary.innerHTML+=`
         <div class="shiftBox">
-          <b>${c}</b><br>
-          ${arr.map(n=>`<span class="badge">${n}</span>`).join("")}
-        </div>`;
+          <b>${shift}</b><br>
+          ${sum[day][shift].map(n=>`<span class="badge">${n}</span>`).join("")}
+        </div>
+      `;
     });
   });
 }
@@ -282,5 +276,4 @@ document.getElementById("clearBtn").onclick=async()=>{
 </script>
 </body>
 </html>
-
 
