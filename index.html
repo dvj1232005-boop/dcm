@@ -23,7 +23,6 @@ body{
 }
 .hidden{display:none}
 
-/* LAYOUT */
 .container{max-width:420px;margin:auto;padding:20px}
 .card{
   background:white;
@@ -34,7 +33,6 @@ body{
 h2{margin:0 0 6px}
 .sub{font-size:13px;color:#555}
 
-/* FORM */
 input,select{
   width:100%;
   padding:14px;
@@ -42,9 +40,6 @@ input,select{
   border-radius:14px;
   border:1px solid #ccc;
   font-size:16px;
-}
-input[type="password"]{
-  letter-spacing:3px;
 }
 button{
   width:100%;
@@ -56,12 +51,9 @@ button{
   font-weight:600;
   margin-top:14px;
 }
-button.secondary{
-  background:#334155;
-}
+button.secondary{background:#334155}
 .day{font-weight:700;margin-top:14px}
 
-/* MANAGER */
 .section{margin-top:18px}
 .shiftBox{
   background:#f1f5f9;
@@ -79,7 +71,6 @@ button.secondary{
   margin:4px 4px 0 0;
 }
 
-/* COUNTDOWN */
 .countdown{
   margin-top:12px;
   padding:14px;
@@ -88,34 +79,11 @@ button.secondary{
   text-align:center;
   border:2px solid #10b981;
 }
-.countdown.warn{
-  background:#fff7ed;
-  border-color:#f97316;
-}
-.countdown.danger{
-  background:#fef2f2;
-  border-color:#dc2626;
-}
-.cd-label{
-  font-size:13px;
-  color:#555;
-  margin-bottom:6px;
-}
-#countdownTime{
-  font-size:26px;
-  font-weight:700;
-  letter-spacing:1px;
-}
+.countdown.warn{background:#fff7ed;border-color:#f97316}
+.countdown.danger{background:#fef2f2;border-color:#dc2626}
 
-/* FOOTER */
-footer{
-  text-align:center;
-  margin-top:16px;
-  font-size:12px;
-  color:#eee
-}
+footer{text-align:center;margin-top:16px;font-size:12px;color:#eee}
 
-/* POPUP */
 .popup{
   position:fixed;
   top:0;
@@ -158,6 +126,14 @@ footer{
     </div>
 
     <input id="name" placeholder="Nhập tên nhân viên">
+
+    <!-- CHỌN CƠ SỞ -->
+    <select id="store">
+      <option value="">Chọn cơ sở làm việc</option>
+      <option value="QuyChe">Quy Chế</option>
+      <option value="DenDo">Đền Đô</option>
+    </select>
+
     <div id="form"></div>
 
     <button id="submitBtn">Xác nhận đăng ký</button>
@@ -167,9 +143,7 @@ footer{
   <div class="card section hidden" id="managerBox">
     <h2>Tổng hợp đăng ký ca làm</h2>
 
-    <!-- FIX PIN -->
     <input id="pin" type="password" placeholder="Nhập mã PIN quản lý">
-
     <button id="loginManager">Đăng nhập quản lý</button>
 
     <div id="summary"></div>
@@ -179,7 +153,7 @@ footer{
     </button>
   </div>
 
-  <footer>© 2025 An Quy Chế • Developed by Đào Đăng Tùng</footer>
+  <footer>© 2026 An Quy Chế • Developed by Đào Đăng Tùng</footer>
 </div>
 
 <!-- POPUP -->
@@ -187,9 +161,7 @@ footer{
   <div class="popupContent">
     <h3>💖 Tri ân nhân viên</h3>
     <p>
-     Ngày 31 là ngày làm việc cuối cùng của anh Nguyễn Minh Hiếu, tập thể xin gửi lời cảm ơn chân thành vì những đóng góp, sự tận tâm và tinh thần trách nhiệm của anh trong suốt thời gian qua. Anh đã để lại nhiều dấu ấn đẹp trong lòng mọi người.
-
-Chúc anh trên chặng đường mới thật nhiều thành công, sức khỏe và hạnh phúc. Hy vọng những kỷ niệm tại đây sẽ luôn là điều đáng nhớ!!!!
+nà ná na na a Độ mixue
     </p>
     <button id="closeBtn">Thank you baeeeee</button>
   </div>
@@ -200,14 +172,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebas
 import { getDatabase, ref, set, get, remove }
 from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
-/* FIREBASE */
 const app = initializeApp({
   apiKey:"AIzaSyCK6yfVr9VBMGwhbvYMXkJqMoRjo4Om2LM",
   databaseURL:"https://an-quy-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
 const db = getDatabase(app);
 
-/* DATA */
 const DAYS=["T2","T3","T4","T5","T6","T7","CN"];
 const SHIFTS=["C1","C2","C3","F1","F2","2C(C1+C2)","2C(C2+C3)"];
 
@@ -264,10 +234,6 @@ function updateCountdown(){
 
   cdTime.innerText=
     `${d} : ${h.toString().padStart(2,"0")} : ${m.toString().padStart(2,"0")} : ${s.toString().padStart(2,"0")}`;
-
-  cdCard.className="countdown";
-  if(diff<1000*60*30) cdCard.className="countdown danger";
-  else if(diff<1000*60*120) cdCard.className="countdown warn";
 }
 setInterval(updateCountdown,1000);
 updateCountdown();
@@ -287,24 +253,28 @@ DAYS.forEach(d=>{
 /* SUBMIT */
 document.getElementById("submitBtn").onclick=async()=>{
   const ten=document.getElementById("name").value.trim();
+  const store=document.getElementById("store").value;
+
   if(!ten) return alert("Vui lòng nhập tên");
+  if(!store) return alert("Vui lòng chọn cơ sở");
 
   if(isRegistrationLocked())
-    return alert("⛔ Đã khóa đăng ký. Mở lại Thứ 2.");
+    return alert("⛔ Đã khóa đăng ký");
 
   const lich={};
   DAYS.forEach(d=>{
     const v=document.getElementById(d).value;
     if(v) lich[d]=v;
   });
+
   if(!Object.keys(lich).length)
     return alert("Bạn chưa đăng ký ca nào");
 
-  await set(ref(db,"dangKy/"+ten),{lich});
+  await set(ref(db,"dangKy/"+store+"/"+ten),{lich,store});
   alert("Đã gửi đăng ký ca làm");
 };
 
-/* MANAGER */
+/* MANAGER FIX RÕ RÀNG */
 document.getElementById("managerBtn").onclick=()=>{
   document.getElementById("managerBox").classList.remove("hidden");
 };
@@ -315,35 +285,59 @@ document.getElementById("loginManager").onclick=async()=>{
 
   const summary=document.getElementById("summary");
   summary.innerHTML="";
+
   const snap=await get(ref(db,"dangKy"));
   if(!snap.exists()){
     summary.innerHTML="<p>Chưa có dữ liệu đăng ký</p>";
     return;
   }
 
-  const sum={};
-  snap.forEach(n=>{
-    const ten=n.key;
-    const lich=n.val().lich||{};
-    Object.entries(lich).forEach(([d,c])=>{
-      sum[d]??={};
-      sum[d][c]??=[];
-      sum[d][c].push(ten);
-    });
-  });
+  const data = snap.val();
 
-  DAYS.forEach(day=>{
-    if(!sum[day]) return;
-    summary.innerHTML+=`<div class="day">${day}</div>`;
-    SHIFTS.forEach(shift=>{
-      if(!sum[day][shift]) return;
-      summary.innerHTML+=`
-        <div class="shiftBox">
-          <b>${shift}</b><br>
-          ${sum[day][shift].map(n=>`<span class="badge">${n}</span>`).join("")}
-        </div>
-      `;
+  ["QuyChe","DenDo"].forEach(store => {
+
+    if(!data[store]) return;
+
+    summary.innerHTML += `
+      <div style="
+        margin-top:20px;
+        padding:12px;
+        border-radius:16px;
+        background:#f8fafc;
+        border:2px solid ${store==="QuyChe"?"#16a34a":"#2563eb"};
+      ">
+        <h3>🏪 ${store==="QuyChe"?"Quy Chế":"Đền Đô"}</h3>
+        <div id="box-${store}"></div>
+      </div>
+    `;
+
+    const box = document.getElementById(`box-${store}`);
+    const sum={};
+
+    Object.entries(data[store]).forEach(([ten,obj])=>{
+      const lich=obj.lich||{};
+      Object.entries(lich).forEach(([d,c])=>{
+        sum[d]??={};
+        sum[d][c]??=[];
+        sum[d][c].push(ten);
+      });
     });
+
+    DAYS.forEach(day=>{
+      if(!sum[day]) return;
+      box.innerHTML += `<div class="day">${day}</div>`;
+
+      SHIFTS.forEach(shift=>{
+        if(!sum[day][shift]) return;
+        box.innerHTML += `
+          <div class="shiftBox">
+            <b>${shift}</b><br>
+            ${sum[day][shift].map(n=>`<span class="badge">${n}</span>`).join("")}
+          </div>
+        `;
+      });
+    });
+
   });
 };
 
@@ -355,17 +349,12 @@ document.getElementById("clearBtn").onclick=async()=>{
   }
 };
 
-/* POPUP (LUÔN HIỆN) */
+/* POPUP */
 const popup = document.getElementById("thankPopup");
 const closeBtn = document.getElementById("closeBtn");
 
-closeBtn.addEventListener("click", ()=>{
-  popup.style.display="none";
-});
-
-window.addEventListener("load", ()=>{
-  popup.style.display="flex";
-});
+closeBtn.onclick=()=>popup.style.display="none";
+window.onload=()=>popup.style.display="flex";
 </script>
 
 </body>
