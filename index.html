@@ -2,174 +2,338 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>Quy Chế & Đền Đô</title>
-
-<meta name="theme-color" content="#0b3d2e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="AnQuyChe">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Đăng Ký Ca Làm | Quản Lý Lịch Trực</title>
+<meta name="theme-color" content="#064e3b">
+<!-- Tích hợp Google Font 'Inter' cho UI hiện đại -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  background:linear-gradient(180deg,#7f1d1d,#064e3b);
-  min-height:100vh;
-}
-.hidden{display:none}
+  :root {
+    --primary: #b91c1c;
+    --primary-hover: #991b1b;
+    --secondary: #334155;
+    --secondary-hover: #1e293b;
+    --success: #10b981;
+    --danger: #dc2626;
+    --bg-gradient: linear-gradient(135deg, #7f1d1d 0%, #064e3b 100%);
+    --surface: rgba(255, 255, 255, 0.95); /* Hiệu ứng Glassmorphism */
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+  }
 
-.container{max-width:420px;margin:auto;padding:20px}
-.card{
-  background:white;
-  border-radius:22px;
-  padding:20px;
-  box-shadow:0 25px 50px rgba(0,0,0,.25);
-}
-h2{margin:0 0 6px}
-.sub{font-size:13px;color:#555}
+  * { box-sizing: border-box; }
 
-input,select{
-  width:100%;
-  padding:14px;
-  margin:10px 0;
-  border-radius:14px;
-  border:1px solid #ccc;
-  font-size:16px;
-}
-button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:16px;
-  background:#b91c1c;
-  color:white;
-  font-weight:600;
-  margin-top:14px;
-}
-button.secondary{background:#334155}
-.day{font-weight:700;margin-top:14px}
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 40px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.section{margin-top:18px}
-.shiftBox{
-  background:#f1f5f9;
-  border-radius:14px;
-  padding:10px;
-  margin:8px 0;
-}
-.badge{
-  display:inline-block;
-  background:#14532d;
-  color:white;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:13px;
-  margin:4px 4px 0 0;
-}
+  .hidden { display: none !important; }
 
-.countdown{
-  margin-top:12px;
-  padding:14px;
-  border-radius:16px;
-  background:#ecfdf5;
-  text-align:center;
-  border:2px solid #10b981;
-}
-.countdown.warn{background:#fff7ed;border-color:#f97316}
-.countdown.danger{background:#fef2f2;border-color:#dc2626}
+  .container {
+    width: 100%;
+    max-width: 520px;
+    margin: auto;
+    position: relative;
+  }
 
-footer{text-align:center;margin-top:16px;font-size:12px;color:#eee}
+  /* Cards with Glassmorphism */
+  .card {
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 32px 28px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
+    margin-bottom: 24px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
 
-.popup{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-.popupContent{
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  width:85%;
-  max-width:320px;
-  text-align:center;
-  animation:fadeIn 0.3s ease;
-}
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(0.9)}
-  to{opacity:1; transform:scale(1)}
-}
+  h2 { margin: 0 0 8px; font-size: 28px; color: var(--text-main); font-weight: 700; text-align: center; letter-spacing: -0.5px; }
+  .sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; font-weight: 500; text-align: center; }
+
+  /* Inputs & Selects */
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"], input[type="password"], select {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+    font-size: 15px;
+    background: #f8fafc;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+    outline: none;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 18px;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.15);
+    background: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Buttons */
+  button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 20px rgba(185, 28, 28, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+  button:hover:not(:disabled) { 
+    background: var(--primary-hover); 
+    transform: translateY(-3px); 
+    box-shadow: 0 12px 25px rgba(185, 28, 28, 0.35); 
+  }
+  button:active:not(:disabled) { transform: translateY(0); box-shadow: 0 4px 10px rgba(185, 28, 28, 0.2); }
+  button:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; opacity: 0.9; color: #64748b; transform: none; }
+  
+  button.secondary {
+    background: var(--secondary);
+    box-shadow: 0 8px 20px rgba(51, 65, 85, 0.2);
+  }
+  button.secondary:hover { background: var(--secondary-hover); box-shadow: 0 12px 25px rgba(51, 65, 85, 0.3); }
+
+  button.danger {
+    background: #fef2f2;
+    color: var(--danger);
+    border: 2px solid #fecaca;
+    box-shadow: none;
+  }
+  button.danger:hover { background: #fee2e2; border-color: #fca5a5; }
+
+  /* Form Grid */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .form-group { display: flex; flex-direction: column; }
+  .form-group.full-width { grid-column: span 2; }
+  .day-label { font-weight: 600; font-size: 14px; margin-bottom: 8px; margin-left: 6px; color: var(--secondary); }
+
+  /* Tags & Badges */
+  .shiftBox { background: #f8fafc; border-radius: 16px; padding: 18px; margin: 12px 0; border: 1px solid var(--border-color); transition: all 0.2s; }
+  .shiftBox:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+  .shiftBox b { color: var(--primary); font-size: 16px; font-weight: 700; }
+  .badge {
+    display: inline-block;
+    background: #14532d;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 8px 6px 0 0;
+    box-shadow: 0 2px 4px rgba(20, 83, 45, 0.2);
+    letter-spacing: 0.3px;
+  }
+
+  /* Countdown Card */
+  .countdown {
+    margin: 24px 0;
+    padding: 24px 16px;
+    border-radius: 20px;
+    background: #ecfdf5;
+    text-align: center;
+    border: 2px solid #a7f3d0;
+    transition: all 0.3s;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  }
+  .cd-label { font-size: 13px; font-weight: 700; color: #047857; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  #countdownTime { font-size: 26px; font-weight: 800; color: #065f46; letter-spacing: 1px; font-variant-numeric: tabular-nums; }
+  
+  .countdown.danger { background: #fef2f2; border-color: #fecaca; }
+  .countdown.danger .cd-label { color: #991b1b; }
+  .countdown.danger #countdownTime { color: #dc2626; }
+
+  /* Status Badge */
+  .status-badge {
+    font-weight: 600; text-align: center; padding: 10px 16px; border-radius: 14px; 
+    background: #f1f5f9; display: inline-block; width: 100%; margin-bottom: 16px;
+    font-size: 14px; border: 1px solid transparent; transition: all 0.3s;
+  }
+
+  /* Custom Scrollbar for Manager Table */
+  .table-responsive { width: 100%; overflow-x: auto; margin-top: 16px; border-radius: 16px; border: 1px solid var(--border-color); }
+  .table-responsive::-webkit-scrollbar { height: 8px; }
+  .table-responsive::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+  .table-responsive::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+  .table-responsive::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  
+  .styled-table { width: 100%; border-collapse: collapse; font-size: 14.5px; text-align: left; background: white; }
+  .styled-table thead tr { background-color: var(--secondary); color: #ffffff; text-align: center; font-weight: 600; }
+  .styled-table th, .styled-table td { padding: 16px; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+  .styled-table tbody tr { transition: background 0.2s; }
+  .styled-table tbody tr:hover { background-color: #f8fafc; }
+  .styled-table td.text-center { text-align: center; font-weight: 600; color: var(--primary); }
+
+  /* Footer */
+  footer { text-align: center; margin-top: auto; padding-top: 24px; font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 500; letter-spacing: 0.5px; }
+
+  /* ================= TOAST NOTIFICATION (NEW) ================= */
+  .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .toast {
+    background: white;
+    color: var(--text-main);
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .toast.show { transform: translateX(0); opacity: 1; }
+  .toast.success { border-left: 6px solid var(--success); }
+  .toast.error { border-left: 6px solid var(--danger); }
+  .toast.warning { border-left: 6px solid #f59e0b; }
+
+  /* Popup/Modal */
+  .popup {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center; z-index: 999;
+  }
+  .popupContent {
+    background: white; padding: 40px 30px; border-radius: 32px; width: 90%; max-width: 400px;
+    text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .popup-icon { font-size: 56px; margin-bottom: 20px; display: inline-block; animation: float 3s ease-in-out infinite; }
+  .popupContent h3 { margin-top: 0; font-size: 26px; color: var(--primary); margin-bottom: 16px; font-weight: 800; }
+  .popupContent p { color: var(--text-muted); line-height: 1.6; margin-bottom: 32px; font-size: 16px; }
+  
+  @keyframes scaleIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 </style>
 </head>
 
 <body>
 
+<!-- Container cho Toast Notifications -->
+<div id="toastContainer" class="toast-container"></div>
+
 <div class="container" id="app">
   <div class="card">
-    <h2>Đăng ký ca làm</h2>
-    <div class="sub">Tuần hiện tại • An Quy Chế</div>
-    <div id="lockStatus" class="sub"></div>
+    <h2>Đăng Ký Ca Làm</h2>
+    <div class="sub">Lịch làm việc tuần hiện tại</div>
+    
+    <div id="lockStatus" class="status-badge">⏳ Đang tải trạng thái hệ thống...</div>
 
     <div id="countdownCard" class="countdown">
-      <div class="cd-label">⏳ Thời gian còn lại để đăng ký</div>
+      <div class="cd-label">⏳ Thời gian còn lại</div>
       <div id="countdownTime">-- : -- : -- : --</div>
     </div>
 
-    <input id="name" placeholder="Nhập tên nhân viên">
+    <div class="input-wrapper">
+      <label class="day-label" style="display: block;">Họ và Tên</label>
+      <input type="text" id="name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="off">
+    </div>
 
-    <select id="store">
-      <option value="">Chọn cơ sở làm việc</option>
-      <option value="QuyChe">Quy Chế</option>
-      <option value="DenDo">Đền Đô</option>
-    </select>
+    <div id="form" class="form-grid"></div>
 
-    <div id="form"></div>
-
-    <button id="submitBtn">Xác nhận đăng ký</button>
-    <button id="managerBtn" class="secondary">🔐 Quản lý</button>
-  </div>
-
-  <div class="card section hidden" id="managerBox">
-    <h2>Tổng hợp đăng ký ca làm</h2>
-
-    <input id="pin" type="password" placeholder="Nhập mã PIN quản lý">
-    <button id="loginManager">Đăng nhập quản lý</button>
-
-    <div id="summary"></div>
-    <div id="excelTable"></div>
-
-    <button id="unlockBtn" class="secondary">🔓 Mở đăng ký</button>
-    <button id="lockBtn" class="secondary">🔒 Khóa đăng ký</button>
-
-    <button id="clearBtn" class="secondary">
-      Xóa toàn bộ lịch tuần này
+    <button id="submitBtn" style="margin-top: 24px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      Xác nhận đăng ký
+    </button>
+    
+    <button id="managerBtn" class="secondary" style="margin-top: 16px; background: transparent; border: 2px solid var(--secondary); color: var(--text-main); box-shadow: none;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      Khu vực Quản lý
     </button>
   </div>
 
-  <footer>© 2026 An Quy Chế • Developed by Đào Đăng Tùng</footer>
+  <div class="card hidden" id="managerBox">
+    <h2>Trang Quản Trị</h2>
+    <div class="sub">Dành cho Admin phê duyệt & tổng hợp</div>
+
+    <div class="input-wrapper" style="margin-top: 20px;">
+      <label class="day-label" style="display: block;">Mã PIN Quản lý</label>
+      <input id="pin" type="password" placeholder="Nhập mã PIN bảo mật...">
+    </div>
+    <button id="loginManager">Đăng nhập hệ thống</button>
+
+    <div id="summary" style="margin-top: 32px;"></div>
+    <div id="excelTable"></div>
+
+    <div class="form-grid" style="margin-top: 40px; border-top: 2px dashed var(--border-color); padding-top: 32px;">
+      <button id="unlockBtn" class="secondary" style="margin-top: 0;">🔓 Mở đăng ký</button>
+      <button id="lockBtn" class="secondary" style="margin-top: 0;">🔒 Khóa đăng ký</button>
+    </div>
+
+    <button id="clearBtn" class="danger" style="margin-top: 16px;">
+      🗑️ Làm sạch lịch tuần này
+    </button>
+  </div>
+
+  <footer>© 2026<br>Developed by DangTung</footer>
 </div>
 
 <div id="thankPopup" class="popup">
   <div class="popupContent">
-    <h3>💖 Cảm ơn bạn </h3>
-    <p>Cảm ơn bạn vì một tuần làm việc đầy năng lượng và trách nhiệm, rất đáng khen!</p>
-    <button id="closeBtn">Thank you baeeeee</button>
+    <span class="popup-icon">🚀</span>
+    <h3>Thành công!</h3>
+    <p>Cảm ơn bạn đã đăng ký ca làm. Chúc bạn một tuần làm việc bùng nổ năng lượng!</p>
+    <button id="closeBtn">Mình biết rồi</button>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getDatabase, ref, set, get, remove }
+import { getDatabase, ref, set, get, remove, onValue }
 from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
 const app = initializeApp({
@@ -181,16 +345,37 @@ const db = getDatabase(app);
 const DAYS=["T2","T3","T4","T5","T6","T7","CN"];
 const SHIFTS=["C1","C2","C3","F1","F2","2C(C1+C2)","2C(C2+C3)"];
 
-/* 🔥 FIX */
-let manualLock = null;
-
-async function loadLock(){
-  const snap = await get(ref(db,"settings/lock"));
-  manualLock = snap.exists() ? snap.val() : null;
+/* ================= CUSTOM TOAST NOTIFICATION (UI UPGRADE) ================= */
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  
+  let icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️';
+  toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+  
+  container.appendChild(toast);
+  
+  // Trigger animation
+  setTimeout(() => toast.classList.add('show'), 10);
+  
+  // Remove after 3s
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 400);
+  }, 3000);
 }
 
-function isRegistrationLocked(){
+/* ================= LOCK STATUS LOGIC ================= */
+let manualLock = null;
 
+onValue(ref(db, "settings/lock"), (snap) => {
+  manualLock = snap.exists() ? snap.val() : null;
+  updateStatus();
+  updateCountdown();
+});
+
+function isRegistrationLocked(){
   if(manualLock === true) return true;
   if(manualLock === false) return false;
 
@@ -203,69 +388,69 @@ function isRegistrationLocked(){
   return false;
 }
 
-/* STATUS */
 const lockStatus=document.getElementById("lockStatus");
 
-async function updateStatus(){
-  await loadLock();
-
-  lockStatus.style.fontWeight="600";
-
+function updateStatus(){
   if(manualLock === true){
-    lockStatus.textContent="⛔ Bị quản lý khóa";
-    lockStatus.style.color="#dc2626";
+    lockStatus.innerHTML="⛔ <span style='color:#dc2626'>Hệ thống đã bị quản lý khóa</span>";
+    lockStatus.style.background = "#fef2f2";
+    lockStatus.style.borderColor = "#fecaca";
     return;
   }
 
   if(manualLock === false){
-    lockStatus.textContent="🟢 Đang mở (quản lý)";
-    lockStatus.style.color="#16a34a";
+    lockStatus.innerHTML="🟢 <span style='color:#16a34a'>Đang mở (Quản lý mở thủ công)</span>";
+    lockStatus.style.background = "#ecfdf5";
+    lockStatus.style.borderColor = "#a7f3d0";
     return;
   }
 
   if(isRegistrationLocked()){
-    lockStatus.textContent="⛔ Đang khóa đăng ký • Mở lại Thứ 2";
-    lockStatus.style.color="#b91c1c";
+    lockStatus.innerHTML="⛔ <span style='color:#dc2626'>Hệ thống đang khóa • Mở lại Thứ 2</span>";
+    lockStatus.style.background = "#fef2f2";
+    lockStatus.style.borderColor = "#fecaca";
   }else{
-    lockStatus.textContent="✅ Đang mở đăng ký • Khóa lúc 20:00 Thứ 6";
-    lockStatus.style.color="#14532d";
+    lockStatus.innerHTML="✅ <span style='color:#15803d'>Đang mở • Tự động khóa 20:00 Thứ 6</span>";
+    lockStatus.style.background = "#ecfdf5";
+    lockStatus.style.borderColor = "#a7f3d0";
   }
 }
-updateStatus();
 
-/* COUNTDOWN */
+/* ================= COUNTDOWN LOGIC ================= */
 const cdCard=document.getElementById("countdownCard");
 const cdTime=document.getElementById("countdownTime");
 const submitBtn=document.getElementById("submitBtn");
 
 function getLockTime(){
-  const now=new Date();
-  const lock=new Date(now);
-  const diff=5-now.getDay();
-  lock.setDate(now.getDate()+diff);
+  const now = new Date();
+  let diff = 5 - now.getDay();
+  if (diff < 0) diff += 7; 
+  
+  const lock = new Date(now);
+  lock.setDate(now.getDate() + diff);
   lock.setHours(20,0,0,0);
   return lock;
 }
-const lockTime=getLockTime();
 
-async function updateCountdown(){
-  await loadLock();
-
+function updateCountdown(){
   const now=new Date();
+  const lockTime=getLockTime();
   const diff=lockTime-now;
 
-  if(diff<=0){
-
-    if(manualLock === false){
-      cdTime.innerText="ĐANG MỞ (quản lý)";
-      cdCard.className="countdown";
-      submitBtn.disabled=false;
-      return;
-    }
-
-    cdTime.innerText="ĐÃ KHÓA";
+  if(isRegistrationLocked()){
+    cdTime.innerText="ĐÃ ĐÓNG";
     cdCard.className="countdown danger";
     submitBtn.disabled=true;
+    return;
+  }
+
+  if(diff<=0){
+    cdTime.innerText="HẾT THỜI GIAN";
+    cdCard.className="countdown";
+    cdCard.style.borderColor = "#fcd34d";
+    cdCard.style.background = "#fffbeb";
+    cdTime.style.color = "#d97706";
+    submitBtn.disabled=false;
     return;
   }
 
@@ -275,35 +460,39 @@ async function updateCountdown(){
   const s=Math.floor(diff/1000)%60;
 
   cdTime.innerText=
-    `${d} : ${h.toString().padStart(2,"0")} : ${m.toString().padStart(2,"0")} : ${s.toString().padStart(2,"0")}`;
+    `${d} ngày : ${h.toString().padStart(2,"0")} : ${m.toString().padStart(2,"0")} : ${s.toString().padStart(2,"0")}`;
+
+  cdCard.className="countdown";
+  cdCard.style = ""; // Reset custom styles
+  submitBtn.disabled=false;
 }
 setInterval(updateCountdown,1000);
 updateCountdown();
 
-/* FORM */
+/* ================= FORM RENDER ================= */
 const form=document.getElementById("form");
-DAYS.forEach(d=>{
+DAYS.forEach((d, index) => {
+  const fullWidthClass = (index === 6) ? "full-width" : "";
   form.innerHTML+=`
-    <div class="day">${d}</div>
-    <select id="${d}">
-      <option value="">Không đăng ký</option>
-      ${SHIFTS.map(s=>`<option>${s}</option>`).join("")}
-    </select>
+    <div class="form-group ${fullWidthClass}">
+      <div class="day-label">${d === 'CN' ? 'Chủ Nhật' : 'Thứ ' + d.charAt(1)}</div>
+      <div class="input-wrapper" style="margin-bottom:0">
+        <select id="${d}">
+          <option value="">Nghỉ</option>
+          ${SHIFTS.map(s=>`<option value="${s}">${s}</option>`).join("")}
+        </select>
+      </div>
+    </div>
   `;
 });
 
-/* SUBMIT giữ nguyên */
+/* ================= SUBMIT ACTION ================= */
 document.getElementById("submitBtn").onclick=async()=>{
-  await loadLock();
-
   const ten=document.getElementById("name").value.trim();
-  const store=document.getElementById("store").value;
-
-  if(!ten) return alert("Vui lòng nhập tên");
-  if(!store) return alert("Vui lòng chọn cơ sở");
+  if(!ten) return showToast("Vui lòng nhập họ và tên của bạn!", "warning");
 
   if(isRegistrationLocked())
-    return alert("⛔ Đã khóa đăng ký");
+    return showToast("Hệ thống hiện tại đang khóa đăng ký!", "error");
 
   const lich={};
   DAYS.forEach(d=>{
@@ -312,216 +501,165 @@ document.getElementById("submitBtn").onclick=async()=>{
   });
 
   if(!Object.keys(lich).length)
-    return alert("Bạn chưa đăng ký ca nào");
+    return showToast("Bạn chưa chọn ca làm nào cho tuần này!", "warning");
 
-  await set(ref(db,"dangKy/"+store+"/"+ten),{lich,store});
-  alert("Đã gửi đăng ký ca làm");
+  // Hiệu ứng Loading xịn
+  submitBtn.innerHTML = `<svg class="spinner" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg> Đang gửi dữ liệu...`;
+  submitBtn.disabled = true;
+
+  try {
+    await set(ref(db,"dangKy/"+ten),{lich});
+    
+    const popup = document.getElementById("thankPopup");
+    popup.style.display = "flex";
+    showToast("Đăng ký thành công!", "success");
+    
+    document.getElementById("name").value = "";
+    DAYS.forEach(d => document.getElementById(d).value = "");
+    
+  } catch(e) {
+    showToast("Lỗi mạng: " + e.message, "error");
+  } finally {
+    submitBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Xác nhận đăng ký`;
+    submitBtn.disabled = false;
+  }
 };
 
-/* MANAGER giữ nguyên */
+/* ================= MANAGER ACTIONS ================= */
 document.getElementById("managerBtn").onclick=()=>{
-  document.getElementById("managerBox").classList.remove("hidden");
+  const mgrBox = document.getElementById("managerBox");
+  mgrBox.classList.toggle("hidden");
+  if(!mgrBox.classList.contains("hidden")) {
+    mgrBox.scrollIntoView({ behavior: "smooth" });
+  }
 };
 
 document.getElementById("loginManager").onclick=async()=>{
   if(document.getElementById("pin").value!=="2005")
-    return alert("Mã PIN không đúng");
+    return showToast("Mã PIN không chính xác!", "error");
 
   const summary=document.getElementById("summary");
   const excel=document.getElementById("excelTable");
 
-  summary.innerHTML="";
+  summary.innerHTML="<p style='text-align:center; color: var(--secondary); font-weight: 500;'>Đang tải dữ liệu...</p>";
   excel.innerHTML="";
 
-  const snap=await get(ref(db,"dangKy"));
-  if(!snap.exists()){
-    summary.innerHTML="<p>Chưa có dữ liệu đăng ký</p>";
-    return;
-  }
+  try {
+    const snap=await get(ref(db,"dangKy"));
+    if(!snap.exists()){
+      summary.innerHTML="<div style='text-align:center; padding: 30px; background: #f8fafc; border-radius: 16px; border: 2px dashed #cbd5e1;'><span style='font-size: 30px;'>📭</span><br><br><b>Chưa có dữ liệu</b><br><span style='color: #64748b; font-size: 14px;'>Chưa có nhân viên nào đăng ký trong tuần này.</span></div>";
+      return;
+    }
 
-  const data = snap.val();
-
-  ["QuyChe","DenDo"].forEach(store => {
-
-    if(!data[store]) return;
-
-    summary.innerHTML += `
-      <div style="
-        margin-top:20px;
-        padding:12px;
-        border-radius:16px;
-        background:#f8fafc;
-        border:2px solid ${store==="QuyChe"?"#16a34a":"#2563eb"};
-      ">
-        <h3>🏪 ${store==="QuyChe"?"Quy Chế":"Đền Đô"}</h3>
-        <div id="box-${store}"></div>
-      </div>
-    `;
-
-    const box = document.getElementById(`box-${store}`);
+    const data = snap.val();
     const sum={};
 
-    Object.entries(data[store]).forEach(([ten,obj])=>{
-      const lich=obj.lich||{};
-      Object.entries(lich).forEach(([d,c])=>{
+    Object.entries(data).forEach(([ten,obj])=>{
+      Object.entries(obj.lich||{}).forEach(([d,c])=>{
         sum[d]??={};
         sum[d][c]??=[];
         sum[d][c].push(ten);
       });
     });
 
+    summary.innerHTML = "<h3 style='margin-bottom: 20px; font-size: 20px;'>📋 Chi tiết theo ngày</h3>";
     DAYS.forEach(day=>{
       if(!sum[day]) return;
-      box.innerHTML += `<div class="day">${day}</div>`;
-
+      let dayHTML = `<h4 style="margin: 30px 0 16px; color: var(--secondary); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; font-size: 17px;">${day === 'CN' ? 'Chủ Nhật' : 'Thứ ' + day.charAt(1)}</h4>`;
+      
       SHIFTS.forEach(shift=>{
         if(!sum[day][shift]) return;
-        box.innerHTML += `
+        dayHTML += `
           <div class="shiftBox">
-            <b>${shift}</b><br>
-            ${sum[day][shift].map(n=>`<span class="badge">${n}</span>`).join("")}
+            <b>Ca ${shift}</b><br>
+            <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
+              ${sum[day][shift].map(n=>`<span class="badge">${n}</span>`).join("")}
+            </div>
           </div>
         `;
       });
+      summary.innerHTML += dayHTML;
     });
 
-  });
-
-  renderExcelTable(data);
-};
-
-/* 🔓 🔒 giữ nguyên */
-document.getElementById("unlockBtn").onclick=async()=>{
-  await set(ref(db,"settings/lock"),false);
-  alert("Đã mở đăng ký");
-  location.reload();
-};
-
-document.getElementById("lockBtn").onclick=async()=>{
-  await set(ref(db,"settings/lock"),true);
-  alert("Đã khóa đăng ký");
-  location.reload();
-};
-
-/* EXCEL FIX TÊN */
-function renderExcelTable(data){
-  const container=document.getElementById("excelTable");
-  const DAYS=["T2","T3","T4","T5","T6","T7","CN"];
-
-  ["QuyChe","DenDo"].forEach(store=>{
-
-    if(!data[store]) return;
-
-    let html=`
-    <div style="margin-top:30px">
-      <h2 style="color:${store==="QuyChe"?"#16a34a":"#2563eb"}">
-        📊 ${store==="QuyChe"?"Quy Chế":"Đền Đô"} - Bảng phân ca
-      </h2>
-
-      <div style="overflow:auto">
-      <table style="border-collapse:collapse;min-width:1400px;width:100%">
-        <tr>
-    `;
-
-    DAYS.forEach(day=>{
-      html+=`<th colspan="4" style="background:#fde047;border:1px solid #999">${day}</th>`;
-    });
-
-    html+="</tr><tr>";
-
-    DAYS.forEach(()=>{
-      html+=`
-        <th style="border:1px solid #999">Buổi</th>
-        <th style="border:1px solid #999">Tên</th>
-        <th style="border:1px solid #999">Ca</th>
-        <th style="border:1px solid #999">Công việc</th>
-      `;
-    });
-
-    html+="</tr>";
-
-    const structured={};
-
-    Object.entries(data[store]).forEach(([ten,obj])=>{
-      const lich=obj.lich||{};
-      Object.entries(lich).forEach(([day,shift])=>{
-        structured[day]??={Sáng:[],Chiều:[],Tối:[]};
-
-        if(shift==="C1") structured[day].Sáng.push(ten);
-        else if(shift==="C2") structured[day].Chiều.push(ten);
-        else if(shift==="C3") structured[day].Tối.push(ten);
-        else if(shift==="2C(C1+C2)"){
-          structured[day].Sáng.push(ten);
-          structured[day].Chiều.push(ten);
-        }
-        else if(shift==="2C(C2+C3)"){
-          structured[day].Chiều.push(ten);
-          structured[day].Tối.push(ten);
-        }
-        else if(shift==="F1"){
-          structured[day].Sáng.push(ten);
-          structured[day].Chiều.push(ten);
-        }
-        else if(shift==="F2"){
-          structured[day].Chiều.push(ten);
-          structured[day].Tối.push(ten);
-        }
-      });
-    });
-
-    ["Sáng","Chiều","Tối"].forEach(session=>{
-      html+="<tr>";
-
-      DAYS.forEach(day=>{
-        const list=structured[day]?.[session]||[];
-
-        html+=`
-        <td style="border:1px solid #ccc;background:#f1f5f9">${session}</td>
-        <td style="border:1px solid #ccc">
-          ${list.map(n=>{
-            const arr=n.split(" ");
-            const mid=Math.ceil(arr.length/2);
-            return `
-              <div style="padding:4px 0;border-bottom:1px dashed #ccc;line-height:1.3">
-                ${arr.slice(0,mid).join(" ")}<br>
-                ${arr.slice(mid).join(" ")}
-              </div>
-            `;
-          }).join("")}
-        </td>
-        <td style="border:1px solid #ccc">
-          ${session==="Sáng"?"C1":session==="Chiều"?"C2":"C3"}
-        </td>
-        <td style="border:1px solid #ccc">
-          ${session==="Sáng"?"Thu ngân / Pha chế":
-            session==="Chiều"?"Pha chế / Phục vụ":
-            "Phục vụ"}
-        </td>
-        `;
-      });
-
-      html+="</tr>";
-    });
-
-    html+="</table></div></div>";
-
-    container.innerHTML+=html;
-  });
-}
-
-/* CLEAR giữ nguyên */
-document.getElementById("clearBtn").onclick=async()=>{
-  if(confirm("Xóa toàn bộ đăng ký tuần này?")){
-    await remove(ref(db,"dangKy"));
-    location.reload();
+    renderExcelTable(data);
+    showToast("Tải dữ liệu thành công!", "success");
+  } catch(e) {
+    showToast("Không thể tải dữ liệu: " + e.message, "error");
   }
 };
 
-/* POPUP giữ nguyên */
-const popup=document.getElementById("thankPopup");
-const closeBtn=document.getElementById("closeBtn");
-closeBtn.onclick=()=>popup.style.display="none";
-window.onload=()=>popup.style.display="flex";
+/* EXCEL TABLE */
+function renderExcelTable(data){
+  const container=document.getElementById("excelTable");
+  
+  let tableHTML = `
+    <h3 style="margin-top: 48px; margin-bottom: 20px; font-size: 20px;">📊 Bảng Tổng Hợp Lịch</h3>
+    <div class="table-responsive">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th style="text-align: left; position: sticky; left: 0; background: var(--secondary); z-index: 10;">Họ & Tên</th>
+            ${DAYS.map(d => `<th>${d}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  Object.entries(data).forEach(([ten,obj])=>{
+    tableHTML += `<tr><td style="position: sticky; left: 0; background: inherit; font-weight: 600; box-shadow: inset -1px 0 0 var(--border-color);">${ten}</td>`;
+    DAYS.forEach(day => {
+       const shift = obj.lich?.[day] || '-';
+       tableHTML += `<td class="text-center">${shift}</td>`;
+    });
+    tableHTML += `</tr>`;
+  });
+
+  tableHTML += `</tbody></table></div>`;
+  container.innerHTML = tableHTML;
+}
+
+/* LOCK / UNLOCK */
+document.getElementById("unlockBtn").onclick=async()=>{
+  if(!confirm("Bạn có chắc chắn muốn MỞ hệ thống thủ công?")) return;
+  await set(ref(db,"settings/lock"),false);
+  showToast("Đã MỞ khóa hệ thống!", "success");
+};
+
+document.getElementById("lockBtn").onclick=async()=>{
+  if(!confirm("Bạn có chắc chắn muốn KHÓA hệ thống thủ công?")) return;
+  await set(ref(db,"settings/lock"),true);
+  showToast("Đã KHÓA hệ thống!", "warning");
+};
+
+/* CLEAR */
+document.getElementById("clearBtn").onclick=async()=>{
+  if(confirm("⚠️ NGUY HIỂM: Xóa TOÀN BỘ dữ liệu đăng ký tuần này?\nHành động này KHÔNG THỂ hoàn tác!")){
+    await remove(ref(db,"dangKy"));
+    showToast("Đã xóa toàn bộ dữ liệu!", "success");
+    document.getElementById("summary").innerHTML = "";
+    document.getElementById("excelTable").innerHTML = "";
+  }
+};
+
+/* POPUP LƯU LOGIC LOCAL STORAGE */
+const popup = document.getElementById("thankPopup");
+const closeBtn = document.getElementById("closeBtn");
+
+// CSS cho keyframes spin của loading icon
+const style = document.createElement('style');
+style.innerHTML = `@keyframes spin { 100% { transform: rotate(360deg); } }`;
+document.head.appendChild(style);
+
+window.onload = () => {
+  if (!localStorage.getItem("thankPopupClosed")) {
+    popup.style.display = "flex";
+  }
+};
+
+closeBtn.onclick = () => {
+  popup.style.display = "none";
+  localStorage.setItem("thankPopupClosed", "true");
+};
 </script>
 
 </body>
