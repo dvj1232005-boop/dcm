@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Đăng Ký Ca Làm | Quản Lý Lịch Trực</title>
+<title>Quy Chế & Đền Đô | Đăng Ký Ca Làm</title>
 <meta name="theme-color" content="#064e3b">
-<!-- Tích hợp Google Font 'Inter' cho UI hiện đại -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -15,24 +13,21 @@
     --secondary: #334155;
     --secondary-hover: #1e293b;
     --success: #10b981;
-    --danger: #dc2626;
     --bg-gradient: linear-gradient(135deg, #7f1d1d 0%, #064e3b 100%);
-    --surface: rgba(255, 255, 255, 0.95); /* Hiệu ứng Glassmorphism */
-    --text-main: #0f172a;
+    --surface: #ffffff;
+    --text-main: #1e293b;
     --text-muted: #64748b;
-    --border-color: #e2e8f0;
   }
 
   * { box-sizing: border-box; }
 
   body {
     margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg-gradient);
-    background-attachment: fixed;
     color: var(--text-main);
     min-height: 100vh;
-    padding: 40px 15px;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,61 +37,49 @@
 
   .container {
     width: 100%;
-    max-width: 520px;
+    max-width: 480px;
     margin: auto;
-    position: relative;
   }
 
-  /* Cards with Glassmorphism */
+  /* Cards */
   .card {
     background: var(--surface);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-radius: 24px;
-    padding: 32px 28px;
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
-    margin-bottom: 24px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
   }
 
-  h2 { margin: 0 0 8px; font-size: 28px; color: var(--text-main); font-weight: 700; text-align: center; letter-spacing: -0.5px; }
-  .sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; font-weight: 500; text-align: center; }
+  h2 { margin: 0 0 8px; font-size: 24px; color: var(--text-main); }
+  .sub { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; font-weight: 500; }
 
   /* Inputs & Selects */
-  .input-wrapper {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  input[type="text"], input[type="password"], select {
+  input, select {
     width: 100%;
-    padding: 16px 20px;
-    border-radius: 16px;
-    border: 2px solid var(--border-color);
-    font-size: 15px;
+    padding: 14px 16px;
+    margin: 8px 0;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    font-size: 16px;
     background: #f8fafc;
     color: var(--text-main);
-    transition: all 0.3s ease;
+    transition: all 0.2s;
     outline: none;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
+    appearance: none;
   }
   
   select {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 16px center;
-    background-size: 18px;
-    appearance: none;
-    cursor: pointer;
+    background-size: 16px;
   }
 
   input:focus, select:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.15);
-    background: #ffffff;
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+    background: #fff;
   }
 
   /* Buttons */
@@ -104,236 +87,175 @@
     width: 100%;
     padding: 16px;
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     background: var(--primary);
     color: white;
     font-size: 16px;
     font-weight: 600;
-    margin-top: 8px;
+    margin-top: 12px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 20px rgba(185, 28, 28, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(185, 28, 28, 0.2);
   }
-  button:hover:not(:disabled) { 
-    background: var(--primary-hover); 
-    transform: translateY(-3px); 
-    box-shadow: 0 12px 25px rgba(185, 28, 28, 0.35); 
-  }
-  button:active:not(:disabled) { transform: translateY(0); box-shadow: 0 4px 10px rgba(185, 28, 28, 0.2); }
-  button:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; opacity: 0.9; color: #64748b; transform: none; }
+  button:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-2px); }
+  button:active:not(:disabled) { transform: translateY(0); }
+  button:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; opacity: 0.8; }
   
   button.secondary {
     background: var(--secondary);
-    box-shadow: 0 8px 20px rgba(51, 65, 85, 0.2);
+    box-shadow: 0 4px 12px rgba(51, 65, 85, 0.2);
   }
-  button.secondary:hover { background: var(--secondary-hover); box-shadow: 0 12px 25px rgba(51, 65, 85, 0.3); }
-
-  button.danger {
-    background: #fef2f2;
-    color: var(--danger);
-    border: 2px solid #fecaca;
-    box-shadow: none;
-  }
-  button.danger:hover { background: #fee2e2; border-color: #fca5a5; }
+  button.secondary:hover { background: var(--secondary-hover); }
 
   /* Form Grid */
   .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 12px;
+    margin-top: 16px;
   }
-  .form-group { display: flex; flex-direction: column; }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
   .form-group.full-width { grid-column: span 2; }
-  .day-label { font-weight: 600; font-size: 14px; margin-bottom: 8px; margin-left: 6px; color: var(--secondary); }
+  .day-label { font-weight: 600; font-size: 14px; margin-left: 4px; color: var(--secondary); }
 
   /* Tags & Badges */
-  .shiftBox { background: #f8fafc; border-radius: 16px; padding: 18px; margin: 12px 0; border: 1px solid var(--border-color); transition: all 0.2s; }
-  .shiftBox:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-  .shiftBox b { color: var(--primary); font-size: 16px; font-weight: 700; }
+  .shiftBox { background: #f1f5f9; border-radius: 16px; padding: 16px; margin: 12px 0; border: 1px solid #e2e8f0; }
+  .shiftBox b { color: var(--primary); font-size: 18px; }
   .badge {
     display: inline-block;
     background: #14532d;
     color: white;
-    padding: 6px 14px;
+    padding: 6px 12px;
     border-radius: 999px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     margin: 8px 6px 0 0;
-    box-shadow: 0 2px 4px rgba(20, 83, 45, 0.2);
-    letter-spacing: 0.3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
   /* Countdown Card */
   .countdown {
-    margin: 24px 0;
-    padding: 24px 16px;
-    border-radius: 20px;
+    margin: 16px 0;
+    padding: 16px;
+    border-radius: 16px;
     background: #ecfdf5;
     text-align: center;
-    border: 2px solid #a7f3d0;
+    border: 1.5px solid var(--success);
     transition: all 0.3s;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
   }
-  .cd-label { font-size: 13px; font-weight: 700; color: #047857; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-  #countdownTime { font-size: 26px; font-weight: 800; color: #065f46; letter-spacing: 1px; font-variant-numeric: tabular-nums; }
+  .cd-label { font-size: 13px; font-weight: 600; color: #047857; margin-bottom: 6px; }
+  #countdownTime { font-size: 22px; font-weight: 700; color: #065f46; letter-spacing: 1px; }
   
-  .countdown.danger { background: #fef2f2; border-color: #fecaca; }
+  .countdown.danger { background: #fef2f2; border-color: #dc2626; }
   .countdown.danger .cd-label { color: #991b1b; }
   .countdown.danger #countdownTime { color: #dc2626; }
 
-  /* Status Badge */
-  .status-badge {
-    font-weight: 600; text-align: center; padding: 10px 16px; border-radius: 14px; 
-    background: #f1f5f9; display: inline-block; width: 100%; margin-bottom: 16px;
-    font-size: 14px; border: 1px solid transparent; transition: all 0.3s;
-  }
+  /* Bổ sung class warn cho trường hợp hết giờ nhưng quản lý mở thủ công */
+  .countdown.warn { background: #fff7ed; border-color: #f97316; }
+  .countdown.warn .cd-label { color: #c2410c; }
+  .countdown.warn #countdownTime { color: #ea580c; }
 
-  /* Custom Scrollbar for Manager Table */
-  .table-responsive { width: 100%; overflow-x: auto; margin-top: 16px; border-radius: 16px; border: 1px solid var(--border-color); }
-  .table-responsive::-webkit-scrollbar { height: 8px; }
-  .table-responsive::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
-  .table-responsive::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
-  .table-responsive::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-  
-  .styled-table { width: 100%; border-collapse: collapse; font-size: 14.5px; text-align: left; background: white; }
-  .styled-table thead tr { background-color: var(--secondary); color: #ffffff; text-align: center; font-weight: 600; }
-  .styled-table th, .styled-table td { padding: 16px; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
-  .styled-table tbody tr { transition: background 0.2s; }
-  .styled-table tbody tr:hover { background-color: #f8fafc; }
-  .styled-table td.text-center { text-align: center; font-weight: 600; color: var(--primary); }
+  /* Table Style for Manager */
+  .table-responsive { width: 100%; overflow-x: auto; margin-top: 16px; border-radius: 12px; border: 1px solid #e2e8f0; }
+  .styled-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+  .styled-table thead tr { background-color: var(--secondary); color: #ffffff; text-align: center; }
+  .styled-table th, .styled-table td { padding: 12px 15px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+  .styled-table tbody tr:nth-of-type(even) { background-color: #f8fafc; }
+  .styled-table tbody tr:last-of-type { border-bottom: 2px solid var(--secondary); }
+  .styled-table td.text-center { text-align: center; font-weight: 500; color: var(--primary); }
 
   /* Footer */
-  footer { text-align: center; margin-top: auto; padding-top: 24px; font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 500; letter-spacing: 0.5px; }
-
-  /* ================= TOAST NOTIFICATION (NEW) ================= */
-  .toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .toast {
-    background: white;
-    color: var(--text-main);
-    padding: 16px 24px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    font-weight: 600;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transform: translateX(120%);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-  .toast.show { transform: translateX(0); opacity: 1; }
-  .toast.success { border-left: 6px solid var(--success); }
-  .toast.error { border-left: 6px solid var(--danger); }
-  .toast.warning { border-left: 6px solid #f59e0b; }
+  footer { text-align: center; margin-top: auto; padding-top: 20px; font-size: 13px; color: rgba(255,255,255,0.7); }
 
   /* Popup/Modal */
   .popup {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(8px);
-    display: none; align-items: center; justify-content: center; z-index: 999;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
   }
   .popupContent {
-    background: white; padding: 40px 30px; border-radius: 32px; width: 90%; max-width: 400px;
-    text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-    animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: white;
+    padding: 32px 24px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  .popup-icon { font-size: 56px; margin-bottom: 20px; display: inline-block; animation: float 3s ease-in-out infinite; }
-  .popupContent h3 { margin-top: 0; font-size: 26px; color: var(--primary); margin-bottom: 16px; font-weight: 800; }
-  .popupContent p { color: var(--text-muted); line-height: 1.6; margin-bottom: 32px; font-size: 16px; }
+  .popupContent h3 { margin-top: 0; font-size: 22px; color: var(--primary); }
+  .popupContent p { color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; }
   
-  @keyframes scaleIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- Container cho Toast Notifications -->
-<div id="toastContainer" class="toast-container"></div>
-
 <div class="container" id="app">
   <div class="card">
-    <h2>Đăng Ký Ca Làm</h2>
-    <div class="sub">Lịch làm việc tuần hiện tại</div>
-    
-    <div id="lockStatus" class="status-badge">⏳ Đang tải trạng thái hệ thống...</div>
+    <h2>Đăng ký ca làm</h2>
+    <div class="sub">Tuần hiện tại • An Quy Chế</div>
+    <div id="lockStatus" class="sub" style="font-weight: 600; margin-bottom: 0;"></div>
 
     <div id="countdownCard" class="countdown">
-      <div class="cd-label">⏳ Thời gian còn lại</div>
+      <div class="cd-label">⏳ Thời gian còn lại để đăng ký</div>
       <div id="countdownTime">-- : -- : -- : --</div>
     </div>
 
-    <div class="input-wrapper">
-      <label class="day-label" style="display: block;">Họ và Tên</label>
-      <input type="text" id="name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="off">
-    </div>
+    <input id="name" placeholder="Nhập tên của bạn (VD: Nguyễn Văn A)">
 
     <div id="form" class="form-grid"></div>
 
-    <button id="submitBtn" style="margin-top: 24px;">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-      Xác nhận đăng ký
-    </button>
-    
-    <button id="managerBtn" class="secondary" style="margin-top: 16px; background: transparent; border: 2px solid var(--secondary); color: var(--text-main); box-shadow: none;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-      Khu vực Quản lý
-    </button>
+    <button id="submitBtn">Xác nhận đăng ký</button>
+    <button id="managerBtn" class="secondary" style="margin-top: 24px;">🔐 Khu vực Quản lý</button>
   </div>
 
   <div class="card hidden" id="managerBox">
     <h2>Trang Quản Trị</h2>
     <div class="sub">Dành cho Admin phê duyệt & tổng hợp</div>
 
-    <div class="input-wrapper" style="margin-top: 20px;">
-      <label class="day-label" style="display: block;">Mã PIN Quản lý</label>
-      <input id="pin" type="password" placeholder="Nhập mã PIN bảo mật...">
-    </div>
-    <button id="loginManager">Đăng nhập hệ thống</button>
+    <input id="pin" type="password" placeholder="Nhập mã PIN quản lý">
+    <button id="loginManager">Đăng nhập</button>
 
-    <div id="summary" style="margin-top: 32px;"></div>
+    <div id="summary" style="margin-top: 20px;"></div>
     <div id="excelTable"></div>
 
-    <div class="form-grid" style="margin-top: 40px; border-top: 2px dashed var(--border-color); padding-top: 32px;">
+    <div class="form-grid" style="margin-top: 24px;">
       <button id="unlockBtn" class="secondary" style="margin-top: 0;">🔓 Mở đăng ký</button>
       <button id="lockBtn" class="secondary" style="margin-top: 0;">🔒 Khóa đăng ký</button>
     </div>
 
-    <button id="clearBtn" class="danger" style="margin-top: 16px;">
-      🗑️ Làm sạch lịch tuần này
+    <button id="clearBtn" style="background: #dc2626; margin-top: 12px;">
+      🗑️ Xóa toàn bộ lịch tuần này
     </button>
   </div>
 
-  <footer>© 2026<br>Developed by DangTung</footer>
+  <footer>© 2026 An Quy Chế<br>Developed by Đào Đăng Tùng</footer>
 </div>
 
 <div id="thankPopup" class="popup">
   <div class="popupContent">
-    <span class="popup-icon">🚀</span>
-    <h3>Thành công!</h3>
-    <p>Cảm ơn bạn đã đăng ký ca làm. Chúc bạn một tuần làm việc bùng nổ năng lượng!</p>
-    <button id="closeBtn">Mình biết rồi</button>
+    <h3>💖 Lời Cảm Ơn </h3>
+    <p>Cảm ơn bạn vì một tuần làm việc đầy năng lượng và trách nhiệm. Chúc bạn một ngày tốt lành!</p>
+    <button id="closeBtn">Mình biết rồi, cảm ơn!</button>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getDatabase, ref, set, get, remove, onValue }
+import { getDatabase, ref, set, get, remove }
 from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
 const app = initializeApp({
@@ -345,35 +267,13 @@ const db = getDatabase(app);
 const DAYS=["T2","T3","T4","T5","T6","T7","CN"];
 const SHIFTS=["C1","C2","C3","F1","F2","2C(C1+C2)","2C(C2+C3)"];
 
-/* ================= CUSTOM TOAST NOTIFICATION (UI UPGRADE) ================= */
-function showToast(message, type = 'success') {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  
-  let icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️';
-  toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
-  
-  container.appendChild(toast);
-  
-  // Trigger animation
-  setTimeout(() => toast.classList.add('show'), 10);
-  
-  // Remove after 3s
-  setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 400);
-  }, 3000);
-}
-
-/* ================= LOCK STATUS LOGIC ================= */
+/* LOCK STATUS LOGIC */
 let manualLock = null;
 
-onValue(ref(db, "settings/lock"), (snap) => {
+async function loadLock(){
+  const snap = await get(ref(db,"settings/lock"));
   manualLock = snap.exists() ? snap.val() : null;
-  updateStatus();
-  updateCountdown();
-});
+}
 
 function isRegistrationLocked(){
   if(manualLock === true) return true;
@@ -390,31 +290,26 @@ function isRegistrationLocked(){
 
 const lockStatus=document.getElementById("lockStatus");
 
-function updateStatus(){
+async function updateStatus(){
+  await loadLock();
+
   if(manualLock === true){
-    lockStatus.innerHTML="⛔ <span style='color:#dc2626'>Hệ thống đã bị quản lý khóa</span>";
-    lockStatus.style.background = "#fef2f2";
-    lockStatus.style.borderColor = "#fecaca";
+    lockStatus.innerHTML="⛔ <span style='color:#dc2626'>Bị quản lý khóa</span>";
     return;
   }
 
   if(manualLock === false){
-    lockStatus.innerHTML="🟢 <span style='color:#16a34a'>Đang mở (Quản lý mở thủ công)</span>";
-    lockStatus.style.background = "#ecfdf5";
-    lockStatus.style.borderColor = "#a7f3d0";
+    lockStatus.innerHTML="🟢 <span style='color:#16a34a'>Đang mở (Ghi đè bởi quản lý)</span>";
     return;
   }
 
   if(isRegistrationLocked()){
-    lockStatus.innerHTML="⛔ <span style='color:#dc2626'>Hệ thống đang khóa • Mở lại Thứ 2</span>";
-    lockStatus.style.background = "#fef2f2";
-    lockStatus.style.borderColor = "#fecaca";
+    lockStatus.innerHTML="⛔ <span style='color:#dc2626'>Đang khóa đăng ký • Mở lại Thứ 2</span>";
   }else{
-    lockStatus.innerHTML="✅ <span style='color:#15803d'>Đang mở • Tự động khóa 20:00 Thứ 6</span>";
-    lockStatus.style.background = "#ecfdf5";
-    lockStatus.style.borderColor = "#a7f3d0";
+    lockStatus.innerHTML="✅ <span style='color:#14532d'>Đang mở đăng ký • Khóa lúc 20:00 Thứ 6</span>";
   }
 }
+updateStatus();
 
 /* ================= COUNTDOWN LOGIC ================= */
 const cdCard=document.getElementById("countdownCard");
@@ -422,34 +317,33 @@ const cdTime=document.getElementById("countdownTime");
 const submitBtn=document.getElementById("submitBtn");
 
 function getLockTime(){
-  const now = new Date();
-  let diff = 5 - now.getDay();
-  if (diff < 0) diff += 7; 
-  
-  const lock = new Date(now);
-  lock.setDate(now.getDate() + diff);
+  const now=new Date();
+  const lock=new Date(now);
+  const diff=5-now.getDay();
+  lock.setDate(now.getDate()+diff);
   lock.setHours(20,0,0,0);
   return lock;
 }
+const lockTime=getLockTime();
 
-function updateCountdown(){
+async function updateCountdown(){
+  await loadLock();
+
   const now=new Date();
-  const lockTime=getLockTime();
   const diff=lockTime-now;
 
+  // ✅ FIX 1: chỉ khóa khi THẬT SỰ bị lock
   if(isRegistrationLocked()){
-    cdTime.innerText="ĐÃ ĐÓNG";
+    cdTime.innerText="ĐÃ KHÓA";
     cdCard.className="countdown danger";
     submitBtn.disabled=true;
     return;
   }
 
+  // ✅ FIX 2: hết giờ nhưng chưa bị lock (vd: quản lý mở thủ công) → vẫn cho đăng ký
   if(diff<=0){
     cdTime.innerText="HẾT THỜI GIAN";
-    cdCard.className="countdown";
-    cdCard.style.borderColor = "#fcd34d";
-    cdCard.style.background = "#fffbeb";
-    cdTime.style.color = "#d97706";
+    cdCard.className="countdown warn";
     submitBtn.disabled=false;
     return;
   }
@@ -462,37 +356,37 @@ function updateCountdown(){
   cdTime.innerText=
     `${d} ngày : ${h.toString().padStart(2,"0")} : ${m.toString().padStart(2,"0")} : ${s.toString().padStart(2,"0")}`;
 
-  cdCard.className="countdown";
-  cdCard.style = ""; // Reset custom styles
+  cdCard.className="countdown"; // Trả về class mặc định nếu đang chạy bình thường
   submitBtn.disabled=false;
 }
 setInterval(updateCountdown,1000);
 updateCountdown();
 
-/* ================= FORM RENDER ================= */
+/* FORM RENDER */
 const form=document.getElementById("form");
 DAYS.forEach((d, index) => {
+  // CN (Sunday) takes full width at the bottom for balance
   const fullWidthClass = (index === 6) ? "full-width" : "";
   form.innerHTML+=`
     <div class="form-group ${fullWidthClass}">
       <div class="day-label">${d === 'CN' ? 'Chủ Nhật' : 'Thứ ' + d.charAt(1)}</div>
-      <div class="input-wrapper" style="margin-bottom:0">
-        <select id="${d}">
-          <option value="">Nghỉ</option>
-          ${SHIFTS.map(s=>`<option value="${s}">${s}</option>`).join("")}
-        </select>
-      </div>
+      <select id="${d}">
+        <option value="">Nghỉ</option>
+        ${SHIFTS.map(s=>`<option>${s}</option>`).join("")}
+      </select>
     </div>
   `;
 });
 
-/* ================= SUBMIT ACTION ================= */
+/* SUBMIT ACTION */
 document.getElementById("submitBtn").onclick=async()=>{
+  await loadLock();
+
   const ten=document.getElementById("name").value.trim();
-  if(!ten) return showToast("Vui lòng nhập họ và tên của bạn!", "warning");
+  if(!ten) return alert("Vui lòng nhập tên của bạn!");
 
   if(isRegistrationLocked())
-    return showToast("Hệ thống hiện tại đang khóa đăng ký!", "error");
+    return alert("⛔ Hệ thống đã khóa đăng ký tuần này!");
 
   const lich={};
   DAYS.forEach(d=>{
@@ -501,31 +395,23 @@ document.getElementById("submitBtn").onclick=async()=>{
   });
 
   if(!Object.keys(lich).length)
-    return showToast("Bạn chưa chọn ca làm nào cho tuần này!", "warning");
+    return alert("Bạn chưa đăng ký bất kỳ ca nào!");
 
-  // Hiệu ứng Loading xịn
-  submitBtn.innerHTML = `<svg class="spinner" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg> Đang gửi dữ liệu...`;
+  submitBtn.innerText = "Đang gửi...";
   submitBtn.disabled = true;
 
   try {
     await set(ref(db,"dangKy/"+ten),{lich});
-    
-    const popup = document.getElementById("thankPopup");
-    popup.style.display = "flex";
-    showToast("Đăng ký thành công!", "success");
-    
-    document.getElementById("name").value = "";
-    DAYS.forEach(d => document.getElementById(d).value = "");
-    
+    alert("✅ Đã gửi đăng ký ca làm thành công!");
   } catch(e) {
-    showToast("Lỗi mạng: " + e.message, "error");
+    alert("❌ Lỗi: " + e.message);
   } finally {
-    submitBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Xác nhận đăng ký`;
+    submitBtn.innerText = "Xác nhận đăng ký";
     submitBtn.disabled = false;
   }
 };
 
-/* ================= MANAGER ACTIONS ================= */
+/* MANAGER ACTIONS */
 document.getElementById("managerBtn").onclick=()=>{
   const mgrBox = document.getElementById("managerBox");
   mgrBox.classList.toggle("hidden");
@@ -536,69 +422,62 @@ document.getElementById("managerBtn").onclick=()=>{
 
 document.getElementById("loginManager").onclick=async()=>{
   if(document.getElementById("pin").value!=="2005")
-    return showToast("Mã PIN không chính xác!", "error");
+    return alert("❌ Mã PIN không đúng");
 
   const summary=document.getElementById("summary");
   const excel=document.getElementById("excelTable");
 
-  summary.innerHTML="<p style='text-align:center; color: var(--secondary); font-weight: 500;'>Đang tải dữ liệu...</p>";
+  summary.innerHTML="<p>Đang tải dữ liệu...</p>";
   excel.innerHTML="";
 
-  try {
-    const snap=await get(ref(db,"dangKy"));
-    if(!snap.exists()){
-      summary.innerHTML="<div style='text-align:center; padding: 30px; background: #f8fafc; border-radius: 16px; border: 2px dashed #cbd5e1;'><span style='font-size: 30px;'>📭</span><br><br><b>Chưa có dữ liệu</b><br><span style='color: #64748b; font-size: 14px;'>Chưa có nhân viên nào đăng ký trong tuần này.</span></div>";
-      return;
-    }
-
-    const data = snap.val();
-    const sum={};
-
-    Object.entries(data).forEach(([ten,obj])=>{
-      Object.entries(obj.lich||{}).forEach(([d,c])=>{
-        sum[d]??={};
-        sum[d][c]??=[];
-        sum[d][c].push(ten);
-      });
-    });
-
-    summary.innerHTML = "<h3 style='margin-bottom: 20px; font-size: 20px;'>📋 Chi tiết theo ngày</h3>";
-    DAYS.forEach(day=>{
-      if(!sum[day]) return;
-      let dayHTML = `<h4 style="margin: 30px 0 16px; color: var(--secondary); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; font-size: 17px;">${day === 'CN' ? 'Chủ Nhật' : 'Thứ ' + day.charAt(1)}</h4>`;
-      
-      SHIFTS.forEach(shift=>{
-        if(!sum[day][shift]) return;
-        dayHTML += `
-          <div class="shiftBox">
-            <b>Ca ${shift}</b><br>
-            <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px;">
-              ${sum[day][shift].map(n=>`<span class="badge">${n}</span>`).join("")}
-            </div>
-          </div>
-        `;
-      });
-      summary.innerHTML += dayHTML;
-    });
-
-    renderExcelTable(data);
-    showToast("Tải dữ liệu thành công!", "success");
-  } catch(e) {
-    showToast("Không thể tải dữ liệu: " + e.message, "error");
+  const snap=await get(ref(db,"dangKy"));
+  if(!snap.exists()){
+    summary.innerHTML="<p>Chưa có ai đăng ký trong tuần này.</p>";
+    return;
   }
+
+  const data = snap.val();
+  const sum={};
+
+  Object.entries(data).forEach(([ten,obj])=>{
+    Object.entries(obj.lich||{}).forEach(([d,c])=>{
+      sum[d]??={};
+      sum[d][c]??=[];
+      sum[d][c].push(ten);
+    });
+  });
+
+  summary.innerHTML = "<h3>Chi tiết theo ca</h3>";
+  DAYS.forEach(day=>{
+    if(!sum[day]) return;
+    let dayHTML = `<h4 style="margin: 16px 0 8px; color: var(--secondary); border-bottom: 2px solid #e2e8f0; padding-bottom: 4px;">${day === 'CN' ? 'Chủ Nhật' : 'Thứ ' + day.charAt(1)}</h4>`;
+    
+    SHIFTS.forEach(shift=>{
+      if(!sum[day][shift]) return;
+      dayHTML += `
+        <div class="shiftBox">
+          <b>Ca ${shift}</b><br>
+          ${sum[day][shift].map(n=>`<span class="badge">${n}</span>`).join("")}
+        </div>
+      `;
+    });
+    summary.innerHTML += dayHTML;
+  });
+
+  renderExcelTable(data);
 };
 
-/* EXCEL TABLE */
+/* EXCEL TABLE (UPGRADED) */
 function renderExcelTable(data){
   const container=document.getElementById("excelTable");
   
   let tableHTML = `
-    <h3 style="margin-top: 48px; margin-bottom: 20px; font-size: 20px;">📊 Bảng Tổng Hợp Lịch</h3>
+    <h3 style="margin-top: 30px;">📊 Bảng Tổng Hợp (Giao diện Excel)</h3>
     <div class="table-responsive">
       <table class="styled-table">
         <thead>
           <tr>
-            <th style="text-align: left; position: sticky; left: 0; background: var(--secondary); z-index: 10;">Họ & Tên</th>
+            <th>Họ & Tên</th>
             ${DAYS.map(d => `<th>${d}</th>`).join('')}
           </tr>
         </thead>
@@ -606,7 +485,7 @@ function renderExcelTable(data){
   `;
 
   Object.entries(data).forEach(([ten,obj])=>{
-    tableHTML += `<tr><td style="position: sticky; left: 0; background: inherit; font-weight: 600; box-shadow: inset -1px 0 0 var(--border-color);">${ten}</td>`;
+    tableHTML += `<tr><td><strong>${ten}</strong></td>`;
     DAYS.forEach(day => {
        const shift = obj.lich?.[day] || '-';
        tableHTML += `<td class="text-center">${shift}</td>`;
@@ -620,46 +499,31 @@ function renderExcelTable(data){
 
 /* LOCK / UNLOCK */
 document.getElementById("unlockBtn").onclick=async()=>{
-  if(!confirm("Bạn có chắc chắn muốn MỞ hệ thống thủ công?")) return;
   await set(ref(db,"settings/lock"),false);
-  showToast("Đã MỞ khóa hệ thống!", "success");
+  alert("Đã MỞ hệ thống thành công!");
+  location.reload();
 };
 
 document.getElementById("lockBtn").onclick=async()=>{
-  if(!confirm("Bạn có chắc chắn muốn KHÓA hệ thống thủ công?")) return;
   await set(ref(db,"settings/lock"),true);
-  showToast("Đã KHÓA hệ thống!", "warning");
+  alert("Đã KHÓA hệ thống thành công!");
+  location.reload();
 };
 
 /* CLEAR */
 document.getElementById("clearBtn").onclick=async()=>{
-  if(confirm("⚠️ NGUY HIỂM: Xóa TOÀN BỘ dữ liệu đăng ký tuần này?\nHành động này KHÔNG THỂ hoàn tác!")){
+  if(confirm("⚠️ NGUY HIỂM: Bạn có chắc chắn muốn xóa TOÀN BỘ dữ liệu đăng ký của tuần này không? Hành động này không thể hoàn tác!")){
     await remove(ref(db,"dangKy"));
-    showToast("Đã xóa toàn bộ dữ liệu!", "success");
-    document.getElementById("summary").innerHTML = "";
-    document.getElementById("excelTable").innerHTML = "";
+    alert("Đã làm sạch dữ liệu!");
+    location.reload();
   }
 };
 
-/* POPUP LƯU LOGIC LOCAL STORAGE */
-const popup = document.getElementById("thankPopup");
-const closeBtn = document.getElementById("closeBtn");
-
-// CSS cho keyframes spin của loading icon
-const style = document.createElement('style');
-style.innerHTML = `@keyframes spin { 100% { transform: rotate(360deg); } }`;
-document.head.appendChild(style);
-
-window.onload = () => {
-  if (!localStorage.getItem("thankPopupClosed")) {
-    popup.style.display = "flex";
-  }
-};
-
-closeBtn.onclick = () => {
-  popup.style.display = "none";
-  localStorage.setItem("thankPopupClosed", "true");
-};
+/* POPUP */
+const popup=document.getElementById("thankPopup");
+const closeBtn=document.getElementById("closeBtn");
+closeBtn.onclick=()=>popup.style.display="none";
+window.onload=()=>popup.style.display="flex";
 </script>
 
 </body>
