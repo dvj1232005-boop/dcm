@@ -2,108 +2,193 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WorkShift Pro | System Suspended</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Báo Tạm Ngưng Phục Vụ</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* Giao diện thông báo mặc định */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            transition: background-color 0.3s;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .alert-box {
-            background: white;
-            padding: 32px 24px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 90%;
-            width: 380px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .alert-box p {
-            color: #0f172a;
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 1.5;
-            margin-bottom: 24px;
-            margin-top: 0;
-        }
-
-        .btn-ok {
-            background-color: #dc2626;
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
+        .notice-container {
+            background-color: #ffffff;
             width: 100%;
+            max-width: 650px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        .btn-ok:hover {
-            background-color: #b91c1c;
+        /* HEADER */
+        .header {
+            background-color: #e3000f;
+            padding: 30px 40px;
+            position: relative;
+            /* Tạo mảng màu chìm (pattern) đơn giản giống ảnh */
+            background-image: 
+                linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05)), 
+                linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05));
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
         }
 
-        /* Giao diện 404 sau khi nhấn OK */
-        .error-404 {
-            display: none;
-            text-align: center;
-            margin-top: 20vh;
-            color: black;
+        .logo {
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: 2px;
         }
 
-        .error-404 h1 {
-            font-size: 48px;
+        /* CONTENT */
+        .content {
+            padding: 40px;
+            color: #333333;
+        }
+
+        .main-title {
+            color: #e3000f;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.4;
             margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .error-404 p {
+        .sub-title {
+            color: #e3000f;
             font-size: 18px;
-            color: #555;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .text-section {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .text-section p {
+            margin-bottom: 15px;
+        }
+
+        .text-section ul {
+            list-style-type: none;
+            margin-bottom: 15px;
+        }
+
+        .text-section ul li {
+            position: relative;
+            padding-left: 15px;
+            margin-bottom: 8px;
+        }
+
+        .text-section ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .text-section strong {
+            font-weight: 700;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px dashed #999;
+            margin: 30px 0;
+        }
+
+        /* FOOTER */
+        .footer {
+            background-color: #e3000f;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            /* Pattern giống header */
+            background-image: 
+                linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05)), 
+                linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05));
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+
+        .footer span {
+            margin: 0 10px;
+            opacity: 0.8;
+        }
+
+        /* Responsive cho thiết bị di động nhỏ */
+        @media (max-width: 480px) {
+            .content { padding: 25px; }
+            .header { padding: 25px; }
+            .main-title { font-size: 22px; }
+            .sub-title { font-size: 15px; }
+            .text-section { font-size: 15px; }
+            .footer { font-size: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Khung thông báo tạm ngưng -->
-    <div class="alert-box" id="alertBox">
-        <p>Chương trình đã ngưng từ ngày 23/05/2026 do không được gia hạn thêm.<br>Cảm ơn vì đã sử dụng.</p>
-        <button class="btn-ok" id="okBtn">OK</button>
-    </div>
+    <div class="notice-container">
+        <header class="header">
+            <div class="logo">ANGIA</div>
+        </header>
 
-    <!-- Khung lỗi 404 ẩn -->
-    <div class="error-404" id="errorPage">
-        <h1>404</h1>
-        <p>Not Found</p>
-        <p style="font-size: 14px; color: #888; margin-top: 20px;">The requested URL was not found on this server.</p>
-    </div>
+        <main class="content">
+            <h1 class="main-title">THÔNG BÁO<br>VỀ VIỆC TẠM NGƯNG PHỤC VỤ</h1>
+            <h2 class="sub-title">CHO HOẠT ĐỘNG THƯỜNG NIÊN CỦA CÔNG TY</h2>
 
-    <script>
-        document.getElementById('okBtn').addEventListener('click', function() {
-            // 1. Ẩn hộp thoại thông báo
-            document.getElementById('alertBox').style.display = 'none';
-            
-            // 2. Chuyển nền body thành màu trắng hoàn toàn
-            document.body.style.backgroundColor = '#ffffff';
-            document.body.style.display = 'block'; 
-            
-            // 3. Hiển thị thông báo 404
-            document.getElementById('errorPage').style.display = 'block';
-            
-            // Xóa lịch sử trang để người dùng không bấm Back lại trang thông báo được (tuỳ chọn)
-            window.history.pushState(null, null, '/404-not-found');
-        });
-    </script>
+            <div class="text-section">
+                <p>Quý Khách thân mến,</p>
+                <p>Chúng tôi xin thông báo về việc tạm ngưng phục vụ cho hoạt động thường niên của Công ty như sau:</p>
+                <ul>
+                    <li>Thời gian nghỉ: Từ ngày <strong>29.07.2022</strong> đến ngày <strong>31.07.2022</strong></li>
+                    <li>Thời gian quay trở lại phục vụ Quý Khách: Ngày <strong>01.08.2022</strong></li>
+                </ul>
+                <p>Kính chúc Quý Khách cuối tuần nhiều niềm vui!</p>
+                <p>Tập đoàn An Gia.</p>
+            </div>
+
+            <hr class="divider">
+
+            <div class="text-section">
+                <p>Dear Valued Customer,</p>
+                <p>We are closed for the company's annual activities as followed:</p>
+                <ul>
+                    <li>Closing: from <strong>July 29th, 2022</strong> until <strong>July 31st, 2022</strong></li>
+                    <li>Reopening: on <strong>August 1st, 2022</strong></li>
+                </ul>
+                <p>We wish you have a nice weekend!</p>
+                <p>An Gia Group.</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            1800 0005 <span>|</span> www.angia.com.vn
+        </footer>
+    </div>
 
 </body>
 </html>
