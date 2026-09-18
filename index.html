@@ -82,12 +82,6 @@
         .app-wrapper {
             position: relative; z-index: 10; display: flex; flex-direction: column; min-height: 100vh; width: 100%; max-width: 700px; margin: 0 auto; padding: 0 16px;
             padding-top: max(16px, env(safe-area-inset-top)); padding-bottom: max(16px, env(safe-area-inset-bottom));
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        body.paywall-open .app-wrapper {
-            transform: scale(0.975);
-            filter: blur(4px) brightness(0.7);
-            pointer-events: none;
         }
 
         /* =========================================================
@@ -122,7 +116,7 @@
         }
 
         /* =========================================================
-           05. GLASS CARD & LINK & TYPEWRITER
+           05. GLASS CARD & LINK HẤP DẪN & TYPEWRITER EFFECT
         ========================================================= */
         .card { background: var(--bg-glass-heavy); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: 32px; padding: 36px 28px; box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.1); border: 1px solid var(--border-glass); margin-bottom: 24px; animation: scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; opacity: 0; transform: translateY(30px); }
         @keyframes scaleIn { to { opacity: 1; transform: translateY(0); } }
@@ -141,6 +135,7 @@
         .ancafe-link:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 25px var(--primary-glow); }
         .ancafe-link:active { transform: translateY(0) scale(0.95); }
 
+        /* Typewriter Effect CSS */
         .slogan-container {
             display: flex; justify-content: center; align-items: center;
             min-height: 24px; width: 100%; margin-bottom: 4px;
@@ -158,7 +153,7 @@
         }
 
         /* =========================================================
-           06. STATUS PANEL
+           06. PREMIUM STATUS PANEL
         ========================================================= */
         .status-panel {
             display: flex; align-items: center; justify-content: center; gap: 20px;
@@ -356,187 +351,6 @@
         .support-icon-wrapper { width: 56px; height: 56px; background: var(--info-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 0 20px var(--info-bg); }
         .support-modal h3 { margin-bottom: 12px; color: var(--text-main); font-weight: 800; font-size: 18px; }
         .support-modal p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; font-weight: 500; }
-
-        /* =========================================================
-           11. VIETNAMESE QR BANKING CHECKOUT FLOW (ONE-SURFACE UI)
-        ========================================================= */
-        .paywall-modal {
-            position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh;
-            background: rgba(3, 4, 8, 0.92); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            z-index: 9999999; display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; pointer-events: none;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
-            user-select: none;
-        }
-        .paywall-modal:not(.hidden) {
-            opacity: 1; visibility: visible; pointer-events: auto;
-        }
-
-        .payment-surface {
-            position: relative; width: 100%; max-width: 440px; height: 100%;
-            display: flex; flex-direction: column; justify-content: space-between;
-            padding: calc(max(16px, env(safe-area-inset-top)) + 4px) 20px max(20px, env(safe-area-inset-bottom)) 20px;
-            color: #f8fafc; overflow-y: auto; overscroll-behavior: contain;
-            transform: translateY(18px) scale(0.98);
-            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .paywall-modal:not(.hidden) .payment-surface {
-            transform: translateY(0) scale(1);
-        }
-
-        .payment-surface::before {
-            content: ''; position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
-            width: 320px; height: 260px;
-            background: radial-gradient(circle, rgba(243, 234, 105, 0.12) 0%, transparent 75%);
-            pointer-events: none; z-index: 0;
-        }
-        .payment-surface > * { position: relative; z-index: 1; }
-
-        .pay-header {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; margin-bottom: 12px;
-        }
-        .pay-brand {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 14px; font-weight: 800; letter-spacing: 0.3px;
-            color: #ede68a;
-        }
-        .pay-brand svg { width: 16px; height: 16px; stroke: #ede68a; }
-        .pay-close-btn {
-            background: rgba(255, 255, 255, 0.08); border: none;
-            color: #94a3b8; width: 34px; height: 34px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s ease;
-        }
-        .pay-close-btn:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.16); color: #fff; }
-
-        .pay-body {
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            margin: auto 0; width: 100%;
-        }
-
-        .pay-tag {
-            font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
-            color: #ede68a; text-transform: uppercase; margin-bottom: 4px;
-        }
-
-        .pay-price {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 42px; font-weight: 800; color: #f3ea69;
-            letter-spacing: -1px; line-height: 1.1; margin: 4px 0 2px 0;
-            text-shadow: 0 4px 20px rgba(243, 234, 105, 0.35);
-        }
-
-        .pay-sub-billing {
-            font-size: 11px; font-weight: 700; letter-spacing: 1.3px;
-            color: #94a3b8; text-transform: uppercase; margin-bottom: 16px;
-        }
-
-        /* KHUNG QR CHUẨN NGÂN HÀNG: Nền trắng sạch, không làm mờ, không dính filter */
-        .qr-clean-container {
-            width: 220px; height: 220px; background: #ffffff;
-            border-radius: 20px; padding: 8px; margin: 0 auto 16px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.15);
-            position: relative;
-        }
-        .qr-clean-container img {
-            width: 100%; height: 100%; object-fit: contain; border-radius: 12px;
-            display: block; opacity: 1 !important; filter: none !important;
-        }
-
-        .pay-guide {
-            font-size: 12.5px; color: #cbd5e1; margin-bottom: 16px; font-weight: 500;
-        }
-
-        /* Bảng thông tin chuyển khoản kèm nút sao chép */
-        .bank-info-sheet {
-            width: 100%; max-width: 360px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 18px; padding: 12px 14px;
-            display: flex; flex-direction: column; gap: 9px;
-            margin-bottom: 14px; text-align: left;
-        }
-        .bank-row {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 12.5px;
-        }
-        .bank-label { color: #94a3b8; font-weight: 600; font-size: 11.5px; }
-        .bank-val-group {
-            display: flex; align-items: center; gap: 8px;
-        }
-        .bank-value {
-            color: #f8fafc; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
-        }
-        .bank-value.highlight { color: #f3ea69; font-weight: 800; }
-        .copy-btn {
-            background: rgba(243, 234, 105, 0.15); border: 1px solid rgba(243, 234, 105, 0.3);
-            color: #f3ea69; font-size: 10.5px; font-weight: 700; padding: 2px 7px;
-            border-radius: 6px; cursor: pointer; transition: all 0.15s ease;
-        }
-        .copy-btn:active { transform: scale(0.92); background: rgba(243, 234, 105, 0.3); }
-
-        /* Khối trạng thái giao dịch */
-        .tx-status-banner {
-            width: 100%; max-width: 360px; padding: 10px 14px; border-radius: 14px;
-            font-size: 12px; font-weight: 700; display: flex; align-items: center;
-            justify-content: center; gap: 8px; margin-bottom: 12px;
-            transition: all 0.25s ease;
-        }
-        .tx-status-banner.is-pending {
-            background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-        .tx-status-banner.is-verifying {
-            background: rgba(59, 130, 246, 0.14); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-        .tx-status-banner.is-success {
-            background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);
-        }
-        .tx-status-banner.is-failed {
-            background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);
-        }
-
-        .pay-actions {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 10px; width: 100%; max-width: 360px; margin: 0 auto;
-        }
-        .pay-primary-btn {
-            width: 100%; height: 50px;
-            background: linear-gradient(180deg, #faef76 0%, #ecd955 100%);
-            color: #1a1600; border: none; border-radius: 16px;
-            font-family: inherit; font-size: 15px !important; font-weight: 800;
-            letter-spacing: -0.2px; cursor: pointer;
-            box-shadow: 0 4px 20px rgba(241, 234, 108, 0.35);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: transform 0.12s ease, filter 0.15s ease;
-        }
-        .pay-primary-btn:active { transform: scale(0.97); filter: brightness(0.96); }
-        .pay-primary-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        .pay-secondary-btn {
-            width: 100%; height: 44px; background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px;
-            color: #f8fafc; font-size: 13.5px !important; font-weight: 700;
-            cursor: pointer; transition: all 0.2s ease;
-        }
-        .pay-secondary-btn:active { transform: scale(0.97); background: rgba(255, 255, 255, 0.14); }
-
-        .pay-dismiss-link {
-            background: transparent; border: none; color: #64748b; font-size: 12.5px;
-            font-weight: 600; cursor: pointer; padding: 4px 10px; transition: color 0.2s;
-        }
-        .pay-dismiss-link:hover, .pay-dismiss-link:active { color: #cbd5e1; }
-
-        @media (min-width: 601px) {
-            .payment-surface {
-                height: auto; max-height: 94vh; border-radius: 34px;
-                border: 1px solid rgba(243, 234, 105, 0.2);
-                background: rgba(11, 13, 20, 0.92);
-                box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95);
-                padding: 30px 28px 24px 28px;
-            }
-        }
     </style>
 </head>
 
@@ -632,6 +446,7 @@
             <div class="slogan-container">
                 <span id="typewriter-text" class="slogan-text"></span><span class="type-cursor">|</span>
             </div>
+
         </div>
         
         <div id="lockStatus">
@@ -665,7 +480,8 @@
                 </svg>
                 <span data-i18n="schedule">Đăng ký lịch làm việc (Tuần này)</span>
             </label>
-            <div id="form" class="calendar-grid" style="margin-bottom: 0;"></div>
+            <div id="form" class="calendar-grid" style="margin-bottom: 0;">
+                </div>
         </div>
 
         <button id="submitBtn" class="btn btn-primary" data-i18n="confirmBtn">Xác Nhận Đăng Ký</button>
@@ -724,6 +540,7 @@
                 </div>
             </div>
 
+            <!-- Khu vực hiển thị riêng biệt Lịch ưu tiên của Quản lý -->
             <div id="priorityAdminContainer"></div>
 
             <div class="table-container">
@@ -733,119 +550,12 @@
     </main>
 </div>
 
-<!-- =========================================================
-     MÀN HÌNH THANH TOÁN QR NGÂN HÀNG (VIETQR CHECKOUT FLOW)
-========================================================= -->
-<div id="paywallModal" class="paywall-modal hidden" aria-modal="true" role="dialog">
-    <div class="payment-surface">
-        
-        <div class="pay-header">
-            <div class="pay-brand">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                <span>Luottruyen17.com - Hệ thống mua bán tự động</span>
-            </div>
-            <button class="pay-close-btn" id="closePaywallBtn" aria-label="Đóng">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </div>
-
-        <div class="pay-body">
-            <div class="pay-tag">XÁC THỰC THANH TOÁN NGÂN HÀNG</div>
-            <div class="pay-price" id="displayPaymentAmount">99.000đ</div>
-            <div class="pay-sub-billing">THANH TOÁN 1 LẦN · KÍCH HOẠT VĨNH VIỄN</div>
-
-            <!-- Khung QR Nền Trắng Sạch Chuẩn Quét Camera (VietQR Techcombank) -->
-            <div class="qr-clean-container">
-                <img id="qrImage" src="" alt="QR Chuyển Khoản Techcombank">
-            </div>
-
-            <div class="pay-guide">Quét mã bằng ứng dụng ngân hàng hoặc ví điện tử</div>
-
-            <!-- Bảng thông tin chuyển khoản một chạm sao chép -->
-            <div class="bank-info-sheet">
-                <div class="bank-row">
-                    <span class="bank-label">Ngân hàng</span>
-                    <span class="bank-value" id="displayBankName">Techcombank</span>
-                </div>
-                <div class="bank-row">
-                    <span class="bank-label">Chủ tài khoản</span>
-                    <span class="bank-value" id="displayAccountName">Dao Dang Tung</span>
-                </div>
-                <div class="bank-row">
-                    <span class="bank-label">Số tài khoản</span>
-                    <div class="bank-val-group">
-                        <span class="bank-value highlight" id="displayAccountNumber">8866823055</span>
-                        <button class="copy-btn" id="copyAccBtn" type="button">Sao chép</button>
-                    </div>
-                </div>
-                <div class="bank-row">
-                    <span class="bank-label">Số tiền</span>
-                    <div class="bank-val-group">
-                        <span class="bank-value highlight" id="displayTransferAmount">99.000đ</span>
-                        <button class="copy-btn" id="copyAmountBtn" type="button">Sao chép</button>
-                    </div>
-                </div>
-                <div class="bank-row">
-                    <span class="bank-label">Nội dung CK</span>
-                    <div class="bank-val-group">
-                        <span class="bank-value highlight" id="displayTxCode">UNLOCK-DKCL</span>
-                        <button class="copy-btn" id="copyContentBtn" type="button">Sao chép</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Banner trạng thái giao dịch -->
-            <div class="tx-status-banner is-pending" id="txStatusBanner">
-                <span id="txStatusIcon">⏳</span>
-                <span id="txStatusText">Đang chờ giao dịch từ ngân hàng...</span>
-            </div>
-        </div>
-
-        <div class="pay-actions">
-            <button class="pay-primary-btn" id="verifyPaymentBtn">
-                <span>Tôi đã thanh toán</span>
-            </button>
-            <button class="pay-secondary-btn" id="openBankingAppBtn">
-                Mở ứng dụng ngân hàng
-            </button>
-            <button class="pay-dismiss-link" id="cancelPaymentBtn">
-                Hủy / Quay lại
-            </button>
-        </div>
-
-    </div>
-</div>
-
 <footer>
     ©2026 DangTung<span class="pro-text">Pro</span> Enterprise.<br>
     <span data-i18n="designed">Designed & Engineered by</span> <strong>Dang Tung</strong>. <span data-i18n="rights">All rights reserved.</span>
 </footer>
 
 <script type="module">
-    // =========================================================
-    // CẤU HÌNH THANH TOÁN TẬP TRUNG (TECHCOMBANK - 99.000đ)
-    // =========================================================
-    const PAYMENT_CONFIG = {
-        bankId: "TCB",                  // Mã ngân hàng Techcombank chuẩn VietQR
-        bankName: "Techcombank",
-        accountNumber: "8866823055",     // Số tài khoản người nhận
-        accountName: "Dao Dang Tung",   // Chủ tài khoản
-        amount: 99000,                 // 99.000đ
-        content: "mua truyenvv"          // Nội dung chuyển khoản chuẩn
-    };
-
-    // Lưu tạm thông tin người đăng ký trong phiên thanh toán hiện tại
-    let pendingRegistration = {
-        employeeName: "",
-        schedule: null
-    };
-
     // --- KHÓA ZOOM TRÊN IOS BẰNG JAVASCRIPT ---
     document.addEventListener('touchmove', function (event) {
         if (event.scale !== 1 || event.touches.length > 1) { event.preventDefault(); }
@@ -865,7 +575,7 @@
             dayShort_T2: "T2", dayShort_T3: "T3", dayShort_T4: "T4", dayShort_T5: "T5", dayShort_T6: "T6", dayShort_T7: "T7", dayShort_CN: "CN",
             off: "OFF", sysLocked: "Hệ thống khóa", stopReg: "Ngưng nhận đăng ký", reopenAt: "Mở lại vào", monday: "Thứ 2", sysOpen: "Đang mở cửa", sysOnline: "Hệ thống trực tuyến", autoLock: "Khóa tự động", emptyData: "Không có dữ liệu trong tuần này.", staffIdentity: "Định danh nhân sự",
             supportTitle: "Trung Tâm Thông Báo", 
-            supportDesc: "Nhằm đảm bảo trải nghiệm tốt nhất, nếu bạn gặp bất kỳ khó khăn nào trong thao tác hoặc phát hiện điểm bất cập của hệ thống, vui lòng liên hệ <strong style='color: var(--primary); font-size: 15px;'>host PhuongAnh</strong>. Chúng tôi sẽ tiếp nhận và xử lý ngay lập tức.",
+            supportDesc: "Nhằm đảm bảo trải nghiệm tốt nhất, nếu bạn gặp bất kỳ khó khăn nào trong thao tác hoặc phát hiện điểm bất cập của hệ thống, vui lòng liên hệ <strong style='color: var(--primary); font-size: 15px;'>host LanAnh</strong>. Chúng tôi sẽ tiếp nhận và xử lý ngay lập tức.",
             dayTitle: "Ngày", listTitle: "Danh sách nhân sự đăng ký"
         },
         en: {
@@ -1063,6 +773,7 @@
     }
     setTimeout(typeWriterEffect, 1000);
 
+
     // --- 6. HỆ THỐNG TOAST THÔNG BÁO ---
     function showToast(msg, type = 'success') {
         const container = document.getElementById('toastContainer'); const toast = document.createElement('div'); toast.className = `toast toast-${type}`;
@@ -1078,7 +789,7 @@
     closeSupportBtn.addEventListener('click', () => { supportModal.classList.add('hidden'); });
     supportModal.addEventListener('click', (e) => { if(e.target === supportModal) supportModal.classList.add('hidden'); });
 
-    // --- 7. TẠO LƯỚI ĐĂNG KÝ CA LÀM ---
+    // --- 7. TẠO LƯỚI ĐĂNG KÝ CA LÀM (CUSTOM DROPDOWN UI MỚI) ---
     const form = document.getElementById("form");
     DAYS.forEach(dayName => {
         const fullDayName = t('dayFullName_' + dayName); const shortDayName = t('dayShort_' + dayName); const offText = t('off');
@@ -1139,7 +850,7 @@
         }
     });
 
-    // --- 8. LOGIC KHÓA/MỞ HỆ THỐNG ---
+    // --- 8. LOGIC KHÓA/MỞ HỆ THỐNG (UI CAO CẤP MỚI) ---
     let manualLock = null;
     onValue(ref(db, "settings/lock"), snap => { manualLock = snap.exists() ? snap.val() : null; updateStatusUI(); });
 
@@ -1180,232 +891,40 @@
         }
     }
 
-    // =========================================================
-    // 09. FLOW THANH TOÁN QR NGÂN HÀNG (TECHCOMBANK - 499.000đ)
-    // =========================================================
-    const paywallModal = document.getElementById('paywallModal');
-    const closePaywallBtn = document.getElementById('closePaywallBtn');
-    const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
-    const verifyPaymentBtn = document.getElementById('verifyPaymentBtn');
-    const openBankingAppBtn = document.getElementById('openBankingAppBtn');
-
-    const qrImage = document.getElementById('qrImage');
-    const displayBankName = document.getElementById('displayBankName');
-    const displayAccountName = document.getElementById('displayAccountName');
-    const displayAccountNumber = document.getElementById('displayAccountNumber');
-    const displayTransferAmount = document.getElementById('displayTransferAmount');
-    const displayPaymentAmount = document.getElementById('displayPaymentAmount');
-    const displayTxCode = document.getElementById('displayTxCode');
-
-    const txStatusBanner = document.getElementById('txStatusBanner');
-    const txStatusIcon = document.getElementById('txStatusIcon');
-    const txStatusText = document.getElementById('txStatusText');
-
-    let paymentListenerUnsubscribe = null;
-    let isVerifyingState = false;
-
-    function formatVND(amount) {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount).replace('₫', 'đ');
-    }
-
-    function setPaymentStatusUI(status, customMsg = null) {
-        txStatusBanner.className = 'tx-status-banner';
-        if (status === 'PENDING') {
-            txStatusBanner.classList.add('is-pending');
-            txStatusIcon.textContent = '⏳';
-            txStatusText.textContent = customMsg || 'Đang chờ giao dịch từ ngân hàng...';
-            verifyPaymentBtn.disabled = false;
-            verifyPaymentBtn.innerHTML = '<span>Tôi đã thanh toán</span>';
-        } else if (status === 'VERIFYING') {
-            txStatusBanner.classList.add('is-verifying');
-            txStatusIcon.textContent = '◌';
-            txStatusText.textContent = customMsg || 'Đang kiểm tra giao dịch với Techcombank...';
-            verifyPaymentBtn.disabled = true;
-            verifyPaymentBtn.innerHTML = '<span>Đang xác minh...</span>';
-        } else if (status === 'SUCCESS') {
-            txStatusBanner.classList.add('is-success');
-            txStatusIcon.textContent = '✓';
-            txStatusText.textContent = customMsg || 'Thanh toán thành công! Đang kích hoạt Unlock OFF...';
-            verifyPaymentBtn.disabled = true;
-            verifyPaymentBtn.innerHTML = '<span>Thành công</span>';
-        } else if (status === 'FAILED' || status === 'EXPIRED') {
-            txStatusBanner.classList.add('is-failed');
-            txStatusIcon.textContent = '×';
-            txStatusText.textContent = customMsg || 'Chưa xác minh được giao dịch. Vui lòng kiểm tra lại.';
-            verifyPaymentBtn.disabled = false;
-            verifyPaymentBtn.innerHTML = '<span>Kiểm tra lại</span>';
-        }
-    }
-
-    async function copyToClipboard(text, successMsg) {
-        try {
-            await navigator.clipboard.writeText(text);
-            showToast(successMsg, "success");
-            if (navigator.vibrate) navigator.vibrate(25);
-        } catch(e) {
-            showToast("Không thể sao chép tự động", "error");
-        }
-    }
-
-    document.getElementById('copyAccBtn').onclick = () => copyToClipboard(PAYMENT_CONFIG.accountNumber, "Đã sao chép số tài khoản");
-    document.getElementById('copyAmountBtn').onclick = () => copyToClipboard(PAYMENT_CONFIG.amount.toString(), "Đã sao chép số tiền");
-    document.getElementById('copyContentBtn').onclick = () => copyToClipboard(PAYMENT_CONFIG.content, "Đã sao chép nội dung chuyển khoản");
-
-    // Khởi tạo phiên thanh toán ngân hàng
-    async function startPaymentSession(employeeName, scheduleData) {
-        pendingRegistration.employeeName = employeeName;
-        pendingRegistration.schedule = scheduleData;
-
-        const formattedMoney = formatVND(PAYMENT_CONFIG.amount);
-
-        // Render dữ liệu thanh toán chuẩn vào UI
-        displayBankName.textContent = PAYMENT_CONFIG.bankName;
-        displayAccountName.textContent = PAYMENT_CONFIG.accountName;
-        displayAccountNumber.textContent = PAYMENT_CONFIG.accountNumber;
-        displayTransferAmount.textContent = formattedMoney;
-        displayPaymentAmount.textContent = formattedMoney;
-        displayTxCode.textContent = PAYMENT_CONFIG.content;
-
-        // Sinh mã VietQR Techcombank đúng chuẩn Napas247[cite: 2]
-        const qrApiUrl = `https://img.vietqr.io/image/${PAYMENT_CONFIG.bankId}-${PAYMENT_CONFIG.accountNumber}-compact2.png?amount=${PAYMENT_CONFIG.amount}&addInfo=${encodeURIComponent(PAYMENT_CONFIG.content)}&accountName=${encodeURIComponent(PAYMENT_CONFIG.accountName)}`;
-        qrImage.src = qrApiUrl;
-
-        setPaymentStatusUI('PENDING');
-
-        // Tạo order PENDING trên Firebase (CHƯA lưu vào node dangKy)
-        try {
-            await set(ref(db, `payment_orders/${PAYMENT_CONFIG.content}`), {
-                employeeName: employeeName,
-                schedule: scheduleData,
-                amount: PAYMENT_CONFIG.amount,
-                bank: PAYMENT_CONFIG.bankName,
-                accountNumber: PAYMENT_CONFIG.accountNumber,
-                accountName: PAYMENT_CONFIG.accountName,
-                status: "PENDING",
-                createdAt: Date.now()
-            });
-
-            // Lắng nghe realtime trạng thái cập nhật từ webhook
-            if (paymentListenerUnsubscribe) paymentListenerUnsubscribe();
-            const orderRef = ref(db, `payment_orders/${PAYMENT_CONFIG.content}`);
-            paymentListenerUnsubscribe = onValue(orderRef, (snapshot) => {
-                if (!snapshot.exists()) return;
-                const orderData = snapshot.val();
-                if (orderData.status === "SUCCESS") {
-                    handlePaymentSuccess();
-                } else if (orderData.status === "FAILED") {
-                    setPaymentStatusUI('FAILED', 'Giao dịch bị từ chối hoặc thất bại');
-                }
-            });
-        } catch(err) {
-            console.error("Order init error:", err);
-        }
-
-        // Mở modal thanh toán
-        paywallModal.classList.remove('hidden');
-        document.body.classList.add('paywall-open');
-        if (navigator.vibrate) navigator.vibrate([35, 25, 35]);
-    }
-
-    function closePaywall() {
-        paywallModal.classList.add('hidden');
-        document.body.classList.remove('paywall-open');
-        if (paymentListenerUnsubscribe) {
-            paymentListenerUnsubscribe();
-            paymentListenerUnsubscribe = null;
-        }
-    }
-
-    closePaywallBtn.addEventListener('click', closePaywall);
-    cancelPaymentBtn.addEventListener('click', closePaywall);
-    paywallModal.addEventListener('click', (e) => {
-        if (e.target === paywallModal) closePaywall();
-    });
-
-    // Mở trực tiếp ứng dụng Techcombank qua link https://dl.vietqr.io/pay?app=tcb
-    openBankingAppBtn.addEventListener('click', () => {
-        window.location.href = "https://dl.vietqr.io/pay?app=tcb";
-        setTimeout(() => {
-            showToast("Nếu chưa mở được app, vui lòng quét mã QR trên màn hình", "warning");
-        }, 1500);
-    });
-
-    // Xử lý khi thanh toán được hệ thống xác nhận thành công
-    async function handlePaymentSuccess() {
-        setPaymentStatusUI('SUCCESS');
-        if (navigator.vibrate) navigator.vibrate([80, 50, 80]);
-        
-        try {
-            // 1. Chỉ lưu vào danh sách đăng ký khi thanh toán thành công
-            if (pendingRegistration.employeeName && pendingRegistration.schedule) {
-                await set(ref(db, "dangKy/" + pendingRegistration.employeeName), { 
-                    lich: pendingRegistration.schedule, 
-                    timestamp: Date.now() 
-                });
-            }
-            // 2. Mở khóa hệ thống Unlock OFF
-            await set(ref(db, "settings/lock"), false);
-        } catch(e) {
-            console.error("Save / Unlock error:", e);
-        }
-
-        setTimeout(() => {
-            closePaywall();
-            showToast("Thanh toán thành công! Đã lưu ca và kích hoạt Unlock OFF.", "success");
-            // Reset form sau khi hoàn tất
-            document.getElementById("name").value = "";
-            DAYS.forEach(day => {
-                document.getElementById(day).value = "";
-                document.getElementById('text_' + day).innerText = t('off');
-                document.querySelector(`#dropdown_${day} .dropdown-selected`).className = 'dropdown-selected';
-            });
-        }, 1500);
-    }
-
-    // Nút "Tôi đã thanh toán": Đọc trạng thái thực tế từ Firebase
-    verifyPaymentBtn.addEventListener('click', async () => {
-        if (isVerifyingState) return;
-        isVerifyingState = true;
-        setPaymentStatusUI('VERIFYING');
-
-        try {
-            const snapshot = await get(ref(db, `payment_orders/${PAYMENT_CONFIG.content}`));
-            const orderData = snapshot.val() || {};
-
-            if (orderData.status === "SUCCESS") {
-                isVerifyingState = false;
-                handlePaymentSuccess();
-                return;
-            }
-
-            setTimeout(() => {
-                isVerifyingState = false;
-                setPaymentStatusUI('PENDING', 'Chưa nhận được giao dịch 499.000đ. Vui lòng kiểm tra lại nội dung CK.');
-                showToast("Chưa thấy tiền vào tài khoản Techcombank. Vui lòng chuyển đúng 499.000đ với cú pháp UNLOCK-DKCL.", "warning");
-            }, 1200);
-
-        } catch(err) {
-            isVerifyingState = false;
-            setPaymentStatusUI('PENDING');
-            showToast("Lỗi kiểm tra: " + err.message, "error");
-        }
-    });
-
-    // Kích hoạt khi bấm "Xác Nhận Đăng Ký"
+    // --- 9. XỬ LÝ SỰ KIỆN GỬI FORM LÊN FIREBASE ---
     document.getElementById("submitBtn").onclick = async () => {
-        const nameInput = document.getElementById("name");
-        const employeeName = nameInput.value.trim();
+        const nameInput = document.getElementById("name"); const employeeName = nameInput.value.trim();
         if(!employeeName) { nameInput.focus(); return showToast(t('placeholder'), "warning"); }
         if(isSystemLocked()) { return showToast(t('sysLocked'), "error"); }
         
         const schedule = {}; 
         DAYS.forEach(day => { const selectedShift = document.getElementById(day).value; if(selectedShift) schedule[day] = selectedShift; });
-        if(!Object.keys(schedule).length) {
-            return showToast("Vui lòng chọn ít nhất một ca làm việc", "warning");
-        }
+        if(!Object.keys(schedule).length) return showToast(t('off'), "warning");
 
-        // Bắt đầu quy trình thanh toán (TUYỆT ĐỐI KHÔNG GHI dangKy/ TẠI ĐÂY)
-        startPaymentSession(employeeName, schedule);
+        const btn = document.getElementById("submitBtn"); const originalText = btn.innerHTML;
+        btn.innerHTML = `...`; btn.disabled = true;
+
+        try {
+            const snapshot = await get(ref(db, "dangKy/" + employeeName));
+            if(snapshot.exists() && !confirm(`Định danh "${employeeName}" đã có dữ liệu. Bạn có muốn ghi đè lịch mới?`)) { 
+                btn.innerHTML = originalText; btn.disabled = false; return; 
+            }
+            
+            await set(ref(db, "dangKy/" + employeeName), { lich: schedule, timestamp: Date.now() });
+            showToast("Success", "success");
+            
+            nameInput.value = ""; 
+            DAYS.forEach(day => {
+                document.getElementById(day).value = "";
+                document.getElementById('text_' + day).innerText = t('off');
+                document.querySelector(`#dropdown_${day} .dropdown-selected`).className = 'dropdown-selected';
+            });
+            
+        } catch(error) { 
+            console.error("Firebase fetch error:", error); showToast("Error: " + error.message, "error"); 
+        } finally { 
+            btn.innerHTML = originalText; btn.disabled = false; 
+        }
     };
 
     // --- 10. ĐIỀU HƯỚNG GIỮA KHU VỰC USER VÀ MANAGER ---
@@ -1465,7 +984,7 @@
         showToast("Welcome", "success"); document.getElementById("loginSection").classList.add("hidden"); document.getElementById("adminPanel").classList.remove("hidden"); fetchAndRenderAdminData();
     }
 
-    // --- 12. LOGIC DASHBOARD QUẢN TRỊ VIÊN ---
+    // --- 12. LOGIC DASHBOARD QUẢN TRỊ VIÊN CẬP NHẬT (ƯU TIÊN TÙNG) ---
     let rawExcelDataExport = ""; 
     async function fetchAndRenderAdminData() {
         const tableContainer = document.getElementById("excelTable"); 
@@ -1483,6 +1002,7 @@
             
             const data = snapshot.val() || {}; 
             
+            // LOGIC PHÂN LOẠI ADMIN
             const isSpecialAdmin = (name) => {
                 const n = name.toLowerCase();
                 return n.includes('tùng') || n.includes('tung');
@@ -1490,10 +1010,12 @@
             
             const allNames = Object.keys(data).sort((a, b) => a.localeCompare(b));
             const adminNames = allNames.filter(isSpecialAdmin);
+            const regularNames = allNames.filter(n => !isSpecialAdmin(n));
             
             let countUsers = allNames.length; 
             let countShifts = 0;
             
+            // 1. XỬ LÝ KHU VỰC ƯU TIÊN CHO ADMIN
             const priorityContainer = document.getElementById("priorityAdminContainer");
             if (adminNames.length > 0) {
                 let adminHtml = `<div style="background: linear-gradient(145deg, var(--bg-glass-heavy) 0%, rgba(220, 38, 38, 0.05) 100%); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 24px; padding: 24px; margin-bottom: 24px; box-shadow: 0 10px 30px var(--primary-glow); position: relative; overflow: hidden; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
@@ -1538,6 +1060,7 @@
                 priorityContainer.innerHTML = '';
             }
 
+            // 2. XỬ LÝ BẢNG CHÍNH DÀNH CHO NHÂN SỰ THƯỜNG
             let htmlTable = `<table><thead><tr><th style="width: 100px;">${t('dayTitle') || 'Ngày'}</th><th style="text-align: left;">Danh sách nhân sự (Thường)</th></tr></thead><tbody>`;
             rawExcelDataExport = `${t('dayTitle') || 'Ngày'}\t${t('listTitle') || 'Danh sách nhân sự đăng ký'}\n`;
             
@@ -1555,6 +1078,7 @@
                         countShifts++;
                         dayShiftsExport.push(`${employeeName} (${shiftRegistered})`);
                         
+                        // Chỉ render nhân sự thường vào bảng
                         if (!isSpecialAdmin(employeeName)) {
                             const shiftInfoObj = SHIFTS.find(s => s.id === shiftRegistered);
                             const cssBadgeClass = shiftInfoObj ? shiftInfoObj.class : 'badge-double';
@@ -1607,7 +1131,7 @@
     }
 
     // =========================================================
-    // 15. EASTER EGG: PHYSICS GRAVITY FALL
+    // 15. EASTER EGG: PHYSICS GRAVITY FALL (KHÔNG TRỌNG LỰC)
     // =========================================================
     let isGravityActive = false; let logoClickCount = 0;
     const brandLogo = document.querySelector('.brand-logo');
